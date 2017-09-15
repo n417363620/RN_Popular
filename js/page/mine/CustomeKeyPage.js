@@ -2,7 +2,7 @@
  *
  * @authors NYY
  *@company ijia-tech
- * @date   2017-09-13 16:54
+ * @date   2017-09-15 11:38
  */
 
 import React, {Component} from 'react';
@@ -13,11 +13,8 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
-import NavigationBar from "../../common/NavigationBar";
-import CustomeKeyPage from "./CustomeKeyPage";
 
-
-export default class MinePage extends Component {
+export default class CustomeKeyPage extends Component {
     // 构造
     constructor(props) {
         super(props);
@@ -29,20 +26,18 @@ export default class MinePage extends Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={'我的'}
+                    title={'标签页'}
                     statusBar={{
                         backgroundColor:"#912CEE",
                         barStyle:"light-content",
                         hidden:false
                     }}
                 />
-                <Text onPress={()=>{
-                     this.props.navigation.navigate()
-                }}>自定义标签</Text>
             </View>
         );
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator'
 import PopularPage from "./page/popular/PopularPage";
+import MinePage from "./page/mine/MinePage";
 export default class Index extends Component {
     // 构造
     constructor(props) {
@@ -69,9 +70,7 @@ export default class Index extends Component {
                     renderIcon={() => <Image style={styles.tb_OffImage} source={require('../res/image/ic_mine.png')} />}
                     renderSelectedIcon={() => <Image style={styles.tb_OnImage} Image source={require('../res/image/ic_mine.png')} />}
                     onPress={() => this.setState({ selectedTab: 'tb_mine' })}>
-                    {<View>
-                        <Text>我的</Text>
-                    </View>}
+                    {<MinePage {...this.props}></MinePage>}
                 </TabNavigator.Item>
             </TabNavigator>
         );
