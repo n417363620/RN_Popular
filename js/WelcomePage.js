@@ -39,7 +39,7 @@ export default class WelcomePage extends Component {
         },500)
     }
 
-    componentWillMount() {
+    componentUnWillMount() {
         this.timer&&clearTimeout(this.timer)
     }
     render() {

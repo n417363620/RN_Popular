@@ -146,10 +146,11 @@ TabNavigator
   tabBarVisible - Tab的是否可见，没有设置的话默认为 true
   tabBarIcon - Tab的icon组件，可以根据 {focused: boolean, tintColor: string} 方法来返回一个icon组件
   tabBarLabel - Tab中显示的标题字符串或者组件，也可以根据 { focused: boolean, tintColor: string } 方法返回一个组件
+
 TabNavigatorConfig
   tabBarComponent - Tab选项卡组件，有 TabBarBottom 和 TabBarTop 两个值，在iOS中默认为 TabBarBottom ，在Android中默认为 TabBarTop 。
-  TabBarTop - 在页面的顶部
-  TabBarBottom - 在页面的底部
+          TabBarTop - 在页面的顶部
+          TabBarBottom - 在页面的底部
   tabBarPosition - Tab选项卡的位置，有 top 或 bottom 两个值
   swipeEnabled - 是否可以滑动切换Tab选项卡
   animationEnabled - 点击Tab选项卡切换界面是否需要动画
