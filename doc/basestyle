@@ -1,0 +1,4 @@
+const NAVIBAR_HEIGHT_ANDROID=50;
+const NAVIBAR_HEIGHT_IOS=44;
+const STATUS_BAR_HEIGHT=20;
+titblebackground:#912CEE
