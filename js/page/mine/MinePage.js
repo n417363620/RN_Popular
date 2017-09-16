@@ -37,7 +37,7 @@ export default class MinePage extends Component {
                     }}
                 />
                 <Text onPress={()=>{
-                     this.props.navigation.navigate()
+                    this.props.navigation.navigate('CustomeKeyPage',{})
                 }}>自定义标签</Text>
             </View>
         );

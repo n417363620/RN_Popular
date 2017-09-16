@@ -28,7 +28,7 @@ import FavoritePage from "../favorite/FavoritePage";
 const URL='https://api.github.com/search/repositories?q=';
 const QUERY_STR='&sort=stars'
 var ScrollableTabView = require('react-native-scrollable-tab-view');
-const KEYS=['ALL','IOS','React-Native']
+const KEYS=['ALL','IOS','React-Native','Android','C++']
 export default class PopularPage extends Component {
     // 构造
     constructor(props) {
@@ -158,6 +158,7 @@ let TabNavigatorConfig={
         indicatorStyle: {backgroundColor: '#ddd', height: 2},
         showLabel: true, // 是否显示label，默认开启。
         showIcon: false,
+        scrollEnabled:true
     }
 };
 const PopularPageTabs = TabNavigator(builderTabPage(),TabNavigatorConfig);
