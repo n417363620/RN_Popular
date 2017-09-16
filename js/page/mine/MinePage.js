@@ -25,6 +25,13 @@ export default class MinePage extends Component {
         this.state = {};
     }
 
+    componentDidMount() {
+      this.timer =  setTimeout(()=>{this.props.navigation.navigate('PopularTab')},200)
+    }
+
+    componentWillUnmount() {
+        this.timer&&clearTimeout(this.timer)
+    }
     render() {
         return (
             <View style={styles.container}>
