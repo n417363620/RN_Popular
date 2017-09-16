@@ -1,5 +1,4 @@
-{
-  "items":[
+[
  {
    "path":"stars:>1",
    "name":"All",
@@ -36,5 +35,4 @@
    "name":"AngularJS",
    "checked":true
  }
-]
-}
+  ]

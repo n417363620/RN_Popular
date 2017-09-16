@@ -3450,6 +3450,10 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-check-box@^1.0.4:
+  version "1.0.4"
+  resolved "http://registry.npm.taobao.org/react-native-check-box/download/react-native-check-box-1.0.4.tgz#228507af6df59fa07b334dfd569aeb709e9ca1e6"
+
 react-native-deprecated-custom-components@^0.1.1:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/react-native-deprecated-custom-components/download/react-native-deprecated-custom-components-0.1.1.tgz#bb911f01bf2f47f0a91764757bf918f3216e94e9"
