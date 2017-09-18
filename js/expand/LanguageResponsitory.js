@@ -45,13 +45,17 @@ export default class LanguageResponsitory {
 
     }
     saveData(data){
-       AsyncStorage.setItem(this.flag,JSON.stringify(data),(error,result)=>{
-           if(error){
-               console.log('数据保存失败：'+error)
-           }else {
-               console.log('数据保存成功：'+result)
-           }
-       })
+        return new Promise((success,failure)=>{
+            AsyncStorage.setItem(this.flag,JSON.stringify(data),(error,result)=>{
+                if(error){
+                    console.log('数据保存失败：'+error)
+                    failure(error)
+                }else {
+                    console.log('数据保存成功：'+result)
+                    success(result)
+                }
+            })
+        })
     }
 }
 

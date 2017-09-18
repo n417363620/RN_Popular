@@ -40,9 +40,15 @@ export default class PopularPage extends Component {
     componentDidMount() {
         this.languageDB.fetchData()
             .then(result=>{
-                this.setState({
-                    languages:result
-                })
+                if(result.length===0){
+                    this.setState({
+                        languages:{name:'All',path:'All',"checked":true}
+                    })
+                }else {
+                    this.setState({
+                        languages:result
+                    })
+                }
                 console.log(result)
             })
             .catch(error=>{

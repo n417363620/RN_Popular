@@ -19,6 +19,7 @@ import MinePage from "./page/mine/MinePage";
 import TrendingPage from "./page/trending/TrendingPage";
 import FavoritePage from "./page/favorite/FavoritePage";
 import CustomeKeyPage from "./page/mine/CustomeKeyPage";
+import KeySortPage from "./page/mine/KeySortPage";
 
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
@@ -66,6 +67,14 @@ const MineScreen = ({ navigation }) => (
  */
 const CustomerKeyScreen = ({ navigation }) => (
     <CustomeKeyPage  navigation={navigation} />
+);
+/**
+ * 我的模块的标签排序页
+ * @param navigation 传递的navigation
+ * @constructor
+ */
+const KeySortScreen = ({ navigation }) => (
+    <KeySortPage  navigation={navigation} />
 );
 
 
@@ -160,6 +169,13 @@ const StacksOverTabs = StackNavigator({
     },
     CustomeKeyPage: {
         screen: CustomerKeyScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header:null,
+        },
+    },
+    KeySortPage: {
+        screen: KeySortScreen,
         navigationOptions: {
             title: 'Notifications',
             header:null,

@@ -22,7 +22,9 @@ export default class MinePage extends Component {
     constructor(props) {
         super(props);
         // 初始状态
-        this.state = {};
+        this.state = {
+
+        };
     }
 
     componentDidMount() {
@@ -30,7 +32,7 @@ export default class MinePage extends Component {
     }
 
     componentWillUnmount() {
-        this.timer&&clearTimeout(this.timer)
+        clearTimeout(this.timer)
     }
     render() {
         return (
@@ -46,6 +48,9 @@ export default class MinePage extends Component {
                 <Text onPress={()=>{
                     this.props.navigation.navigate('CustomeKeyPage',{})
                 }}>自定义标签</Text>
+                <Text onPress={()=>{
+                    this.props.navigation.navigate('KeySortPage')
+                }}>标签排序页</Text>
             </View>
         );
     }

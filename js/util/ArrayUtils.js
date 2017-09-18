@@ -28,6 +28,39 @@ export default class ArrayUtils extends Component {
        }
        array.push(item)
    }
+
+    /**
+     * 复制一个数组
+     * @param array
+     * @returns {Array}
+     */
+   static cloneArray(array){
+       if (!array) return [];
+       let clonedArray=[];
+       array.forEach((value,key,array)=>{
+           clonedArray.push(value)
+       })
+       return clonedArray;
+   }
+
+    /**
+     * 比较两个数组是否相等
+     * @param array1
+     * @param array2
+     * @returns {boolean}
+     */
+   static isEqual(array1,array2){
+       console.log(array1)
+       console.log(array2)
+       if(array1===null&&array2===null) return false;
+       if(array1.length!==array2.length)return false;
+       for (let i=0;i<array1.length;i++){
+           if(array1[i]!==array2[i]) {
+               return false
+           }
+       }
+       return true;
+   }
 }
 
 
