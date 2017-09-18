@@ -51,6 +51,9 @@ export default class MinePage extends Component {
                 <Text onPress={()=>{
                     this.props.navigation.navigate('KeySortPage')
                 }}>标签排序页</Text>
+                <Text onPress={()=>{
+                    this.props.navigation.navigate('CustomeKeyPage',{removeKeys:true})
+                }}>移除标签页</Text>
             </View>
         );
     }

@@ -29,10 +29,14 @@ export default class CustomeKeyPage extends Component {
         this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_key)
         this.changeValues=[];
         this.state = {
-            keys:[]
+            keys:[],
+            removeKeys:false
         };
     }
     componentDidMount() {
+        this.setState({
+            removeKeys:this.props.navigation.state.params.removeKeys
+        })
         this.languageDB.fetchData()
             .then((result)=>{
              this.setState({
@@ -44,12 +48,19 @@ export default class CustomeKeyPage extends Component {
             })
     }
     save(){
-          console.log(this.state.keys)
           if(this.changeValues.length===0){
               this.props.navigation.goBack()
              return
           }
-          this.languageDB.saveData(this.state.keys)
+          if(this.state.removeKeys===true){
+              let finalArray=ArrayUtils.cloneArray(this.state.keys)
+              for(let i=0;i<this.changeValues.length;i++){
+                  ArrayUtils.removeItem(finalArray,this.changeValues[i])
+              }
+              this.languageDB.saveData(finalArray)
+          }else {
+              this.languageDB.saveData(this.state.keys)
+          }
          this.reset()
     }
     reset(){
@@ -91,7 +102,9 @@ export default class CustomeKeyPage extends Component {
          return views
     }
     oncheck(data){
-        data.checked=!data.checked
+        if(!this.state.removeKeys===true){
+            data.checked=!data.checked
+        }
        ArrayUtils.updataArray(this.changeValues,data)
     }
     renderCheckBox(data,key){
@@ -99,7 +112,7 @@ export default class CustomeKeyPage extends Component {
         return (<CheckBox key={key}
             style={styles.itemText}
             leftText={data.name}
-            isChecked={data.checked}
+            isChecked={this.state.removeKeys===true?false:data.checked}
             checkedImage={<Image style={styles.itemImag} source={require('../../../res/image/ic_checked.png')}/>}
             unCheckedImage={<Image style={styles.itemImag} source={require('../../../res/image/ic_unchecked.png')}/>}
             onClick={()=>{
@@ -109,14 +122,17 @@ export default class CustomeKeyPage extends Component {
           />)
     }
     render() {
+        let rightButtonText=this.state.removeKeys===true?'移除':'保存'
+        let title=this.state.removeKeys===true?'移除标签':'自定义'
         return (
+
             <View style={styles.container}>
                 <NavigationBar
-                    title={'标签页'}
+                    title={title}
                     leftButton={ViewUtil.getLfetBackButton(()=>{
                        this.back()
                     })}
-                    rightButton={ViewUtil.getRightTextButton('保存',()=>{
+                    rightButton={ViewUtil.getRightTextButton(rightButtonText,()=>{
                         this.save()
                     })}
                     statusBar={{

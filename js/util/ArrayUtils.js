@@ -61,6 +61,20 @@ export default class ArrayUtils extends Component {
        }
        return true;
    }
+
+    /**
+     * 从数组中移除某个元素
+     * @param array
+     * @param item
+     */
+   static removeItem(array,item){
+       for(let i=1;i<array.length;i++){
+           if (item===array[i]){
+               console.log('两个元素相等')
+               array.splice(i,1);
+           }
+       }
+   }
 }
 
 
