@@ -5,7 +5,7 @@
  * @date   2017-09-14 22:24
  */
 
-import React, {Component} from 'react';
+import React, {Component,PropTypes} from 'react';
 import {
     View,
     Text,
@@ -14,19 +14,24 @@ import {
     TouchableOpacity
 } from 'react-native'
 
-export default class FavorityItem extends Component {
+export default class PopularItem extends Component {
     // 构造
     constructor(props) {
         super(props);
         // 初始状态
         this.state = {};
     }
-
+    static propTypes={
+        goDetail:PropTypes.func,
+        collect:PropTypes.func
+    }
     render() {
         let data=this.props.data
         return(
 
-           <TouchableOpacity style={styles.cell}>
+           <TouchableOpacity style={styles.cell} onPress={()=>{
+               this.props.goDetail(data)
+           }}>
                <View style={styles.container}>
                    <Text style={styles.title}>{data.full_name}</Text>
                    <Text style={styles.description}>{data.description?data.description:'no description'}</Text>
@@ -40,7 +45,11 @@ export default class FavorityItem extends Component {
                            <Text style={styles.language}>stars:  </Text>
                            <Text style={styles.language}>{data.stargazers_count}</Text>
                        </View>
-                       <Image style={styles.collectimg} source={require('../../res/image/ic_collect.png')}/>
+                      <TouchableOpacity onPress={()=>{
+                         this.props.collect(data)
+                      }}>
+                          <Image style={styles.collectimg} source={require('../../res/image/ic_collect.png')}/>
+                      </TouchableOpacity>
                    </View>
                </View>
            </TouchableOpacity>

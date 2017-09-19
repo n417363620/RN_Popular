@@ -5,7 +5,7 @@
  * @date   2017-09-13 16:49
  */
 
-import React, {Component} from 'react';
+import React, {Component,PropTypes} from 'react';
 import {
     View,
     Text,
@@ -21,8 +21,7 @@ import {
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import NavigationBar from "../../common/NavigationBar";
 import DataRequest from "../../util/DataRequest";
-import FavorityItem from "../../common/FavorityItem";
-import FavoritePage from "../favorite/FavoritePage";
+import PopularItem from "../../common/PopularItem";
 import LanguageResponsitory,{FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 const KEYS=['Android','IOS','React-Native']
 const URL='https://api.github.com/search/repositories?q=';
@@ -55,7 +54,9 @@ export default class PopularPage extends Component {
             .catch(error=>{
                 console.log(error)
             })
-
+        this.obsever=DeviceEventEmitter.addListener('jumptodetail',(data)=>{
+            NavigationBar.Push(this,'WebViewPage',data)
+        })
     }
     //todo 底部按钮注册位置
     renderTabBar(array){
@@ -98,7 +99,7 @@ export default class PopularPage extends Component {
             }
         };
         const PopularPageTabs = TabNavigator(builderTabPage(),TabNavigatorConfig);
-       return <PopularPageTabs></PopularPageTabs>
+       return <PopularPageTabs/>
     }
     render() {
         return (
@@ -177,9 +178,24 @@ export default class PopularPage extends Component {
                 console.log(error)
             })
     }
-
+    jumptoDetial(data){
+        DeviceEventEmitter.emit('jumptodetail',data)
+        //该界面注册的子页面无法关联的app根路由的navigation中，所以跳转页面必须用父页面订阅事件来进行跳转
+       // this.props.navigation.navigate('Android')
+     }
+     collectResponsitory(data){
+         DeviceEventEmitter.emit('toast','收藏')
+     }
     _renderRow(data){
-        return <FavorityItem data={data}/>
+        return <PopularItem data={data}
+                            goDetail={(data)=>{
+                                    this.jumptoDetial(data)
+                                     }}
+                            collect={(data)=>{
+                                   this.collectResponsitory(data)
+                              }
+                            }
+        />
     }
     render(){
         return <ListView

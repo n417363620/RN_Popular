@@ -22,6 +22,7 @@ import TrendingPage from "./page/trending/TrendingPage";
 import FavoritePage from "./page/favorite/FavoritePage";
 import CustomeKeyPage from "./page/mine/CustomeKeyPage";
 import KeySortPage from "./page/mine/KeySortPage";
+import WebViewPage from "./common/WebViewPage";
 
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
@@ -79,7 +80,14 @@ const KeySortScreen = ({ navigation }) => (
     <KeySortPage  navigation={navigation} />
 );
 
-
+/**
+ * 公共的浏览器页
+ * @param navigation
+ * @constructor
+ */
+const WebViewScreen = ({ navigation }) => (
+    <WebViewPage  navigation={navigation} />
+);
 const TabNav = TabNavigator(
     {
         PopularTab: {
@@ -183,6 +191,13 @@ const StacksOverTabs = StackNavigator({
             header:null,
         },
     },
+    WebViewPage:{
+        screen:WebViewScreen,
+        navigationOptions:{
+            header:null,
+            title:'WebView'
+        }
+    }
 });
 
 export default class Index extends Component {
