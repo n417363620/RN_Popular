@@ -15,7 +15,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     StatusBar,
-    RefreshControl
+    RefreshControl,
+    DeviceEventEmitter
 } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import NavigationBar from "../../common/NavigationBar";
@@ -99,7 +100,7 @@ export default class PopularPage extends Component {
         const PopularPageTabs = TabNavigator(builderTabPage(),TabNavigatorConfig);
        return <PopularPageTabs></PopularPageTabs>
     }
-     render() {
+    render() {
         return (
             <View style={{flex:1}}>
                 <NavigationBar
@@ -143,19 +144,38 @@ export default class PopularPage extends Component {
         return URL+key+QUERY_STR;
     }
     onLoad(text){
-
-        this.dataRequrest.get(this.genUrl(text))
+        let url = this.genUrl(text)
+        this.dataRequrest.getResponsitory(url)
             .then(result=>{
-                console.log(result)
+                //判断获取的result是否为空，在判断result的items是否为空，如果二者同时不为空设置值，在单独判断result是否为空
+                let items=result&&result.items?result.items:result?result:[]
                 this.setState({
                     loading:false,
-                    dataSource:this.state.dataSource.cloneWithRows(result.items)
+                    dataSource:this.state.dataSource.cloneWithRows(items)
                 })
+                //判断result是否为空，result是否有update_data字段，unpdate_date是否过期
+                if(result&&result.update_data&&this.dataRequrest.checkDataValid(result.update_data)===false){
+                   //如果过期则重新获取网络数据，继续Promise的流程执行.thern
+                    this.setState({
+                        loading:true
+                    })
+                    return this.dataRequrest.get(url)
+                }else {
+                }
+            })
+            .then(result=>{
+                this.setState({
+                    loading:false,
+                })
+                if (result!=null&&result.items!=null&&result.items.length!==0){
+                    this.setState({
+                        dataSource:this.state.dataSource.cloneWithRows(result.items)
+                    })
+                }else return
             })
             .catch(error=>{
                 console.log(error)
             })
-
     }
 
     _renderRow(data){

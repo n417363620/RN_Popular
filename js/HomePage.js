@@ -10,9 +10,11 @@ import {
     StyleSheet,
     Text,
     Image,
-    View
+    View,
+    DeviceEventEmitter
 } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
+import Toast ,{DURATION} from 'react-native-easy-toast'
 /*import TabNavigator from 'react-native-tab-navigator'*/
 import PopularPage from "./page/popular/PopularPage";
 import MinePage from "./page/mine/MinePage";
@@ -192,9 +194,22 @@ export default class Index extends Component {
             selectedTab:'tb_popular'
         };
       }
+
+    componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener('toast',(text)=>{
+            this.toast.show(text,DURATION.LENGTH_SHORT)
+        })
+    }
+
+    componentWillUnmount() {
+        this.subscription.remove()
+    }
     render() {
         return (
-            <StacksOverTabs/>
+            <View style={{flex:1}}>
+                <StacksOverTabs/>
+                <Toast ref={toast=>this.toast=toast}></Toast>
+            </View>
         );
     }
 }
