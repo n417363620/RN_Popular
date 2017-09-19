@@ -15,6 +15,7 @@ import {
     AsyncStorage
 } from 'react-native'
 import keys from '../../res/data/keys.json'
+import languages from '../../res/data/langs.json'
 export var FLAG_LANGUAGE={flag_language:'flag_language_language',flag_key:'flag_language_key'}
 export default class LanguageResponsitory {
      constructor(flag) {
@@ -33,7 +34,7 @@ export default class LanguageResponsitory {
                                reject(error)
                            }
                        }else {
-                           var  data = this.flag===FLAG_LANGUAGE.flag_key?keys:null;
+                           var  data = this.flag===FLAG_LANGUAGE.flag_key?keys:languages;
                            console.log(data)
                            this.saveData(data);
                            resolve(data)

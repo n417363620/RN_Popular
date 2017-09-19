@@ -5,7 +5,16 @@
  * @date   2017-09-13 21:24
  */
 import {AsyncStorage} from 'react-native'
+import GitHubTrending from 'GitHubTrending'
+export const FLAG_MODULE={flag_popular:'popular',flag_trending:'rending'}
 export default  class DataRequest{
+    // 构造
+      constructor(flag) {
+          this.flag=flag;
+        if(flag===FLAG_MODULE.flag_trending){
+            this.trendingHelper=new GitHubTrending()
+        }
+      }
     /**
      * 获取网络数据
      * @param url
@@ -13,20 +22,42 @@ export default  class DataRequest{
      * @returns {Promise}
      */
      get(url){
-        return new Promise((resolve,reject)=>{
-            fetch(url).then(response=>response.json())
-                .then(result=>{
-                    if(!result){
-                        reject(new Error('responseData is null'))
-                        return
-                    }
-                    resolve(result);
-                    this.saveRepository(url,result.items)
-                })
-                .catch(error=>{
-                    reject(error)
-                })
-        })
+         if(this.flag===FLAG_MODULE.flag_popular){
+             return new Promise((resolve,reject)=>{
+                 fetch(url).then(response=>response.json())
+                     .then(result=>{
+                         if(!result){
+                             reject(new Error('responseData is null'))
+                             return
+                         }
+                         resolve(result);
+                         this.saveRepository(url,result.items)
+                     })
+                     .catch(error=>{
+                         reject(error)
+                     })
+             })
+         }
+        if(this.flag===FLAG_MODULE.flag_trending){
+             return new Promise((resolve,reject)=>{
+                 this.trendingHelper.fetchTrending(url)
+                     .then(result=>{
+                         if(!result){
+                             reject(new Error('responseData is null'))
+                             return
+                         }
+                         //trending请求到的数据本身就是一个数组,为了达到数据统一重新封装一下数据
+                         let jsonresult={
+                             items:result
+                         }
+                         resolve(jsonresult);
+                         this.saveRepository(url,result)
+                     })
+                     .catch(error=>{
+                         reject(error)
+                     })
+             })
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ import {
 } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import NavigationBar from "../../common/NavigationBar";
-import DataRequest from "../../util/DataRequest";
+import DataRequest, {FLAG_MODULE} from "../../util/DataRequest";
 import PopularItem from "../../common/PopularItem";
 import LanguageResponsitory,{FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 const KEYS=['Android','IOS','React-Native']
@@ -128,7 +128,7 @@ export default class PopularPage extends Component {
             loading:true,
             dataSource:new ListView.DataSource({rowHasChanged:(r1,r2)=>r1!==r2})
         };
-        this.dataRequrest=new DataRequest();
+        this.dataRequrest=new DataRequest(FLAG_MODULE.flag_popular);
     }
 
     componentDidMount() {
