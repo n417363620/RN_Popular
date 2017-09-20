@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     DeviceEventEmitter, RefreshControl
 } from 'react-native'
+import ScrollableTableView ,{ScrollableTabBar}from 'react-native-scrollable-tab-view'
 import NavigationBar from "../../common/NavigationBar";
 import DataRequest, {FLAG_MODULE} from "../../util/DataRequest";
 import TrendingItem from "../../common/TrendingItem";
@@ -23,9 +24,9 @@ import LanguageResponsitory, {FLAG_LANGUAGE} from "../../expand/LanguageResponsi
 import TimeSpan from '../../model/TimeSpan'
 import Popover, {PopoverTouchable} from 'react-native-modal-popover'
 const URL='https://github.com/trending/'
-var timeSpans=[new TimeSpan('今日','since-daily'),
-              new TimeSpan('本周','since-weekly'),
-              new TimeSpan('本月','since-monthly')]
+var timeSpans=[new TimeSpan('今日','since=daily'),
+              new TimeSpan('本周','since=weekly'),
+              new TimeSpan('本月','since=monthly')]
 export default class TrendingPage extends Component {
     // 构造
     constructor(props) {
@@ -38,7 +39,7 @@ export default class TrendingPage extends Component {
             visible:false,
             buttonRect:{},
             title:'趋势 今日▼',
-            path:'since-daily'
+            timeSpan:'since-daily'
         };
     }
 
@@ -78,14 +79,17 @@ export default class TrendingPage extends Component {
      renderItem() {
         var items=[]
         for (let i=0;i<timeSpans.length;i++){
-            items.push( <Text style={{color:'white',marginVertical:4}} onPress={()=>{
-                this.closePopover()
-                this.setState({
-                    title:'趋势 ' + timeSpans[i].showText +'▼',
-                     path:timeSpans[i].searchText
-                })
-            }
-            }>{timeSpans[i].showText}</Text>)
+            items.push(<TouchableOpacity
+                onPress={()=>{
+                    this.closePopover()
+                    this.setState({
+                        title:'趋势 ' + timeSpans[i].showText +'▼',
+                        timeSpan:timeSpans[i].searchText
+                    })
+                }
+                }>
+                <Text style={{color:'white',marginVertical:4}} >{timeSpans[i].showText}</Text>
+            </TouchableOpacity>)
         }
         return items
     }
@@ -120,41 +124,25 @@ export default class TrendingPage extends Component {
             if(!array[i].checked) continue
             KEYS.push(array[i].name)
         }
-        function builderTabPage() {
-            let RouteConfigs={}
+        function builderTabPage(timeSpan) {
+            let Tabs=[]
             KEYS.forEach((value,key,array)=>{
-                let item = {
-                    screen: TrendingPageTab,
-                    path: '/',
-                    navigationOptions: {
-                        tabBarLabel: value,
-                    }
-                }
-
-                RouteConfigs[value] = item;
+                Tabs.push(<TrendingPageTab key={key} tabLabel={value} timeSpan={timeSpan} {...this.props}></TrendingPageTab>)
             })
-
-            return RouteConfigs
+            return Tabs
         }
-        let TabNavigatorConfig={
-            tabBarPosition: 'top', // 设置tabbar的位置，iOS默认在底部，安卓默认在顶部。（属性值：'top'，'bottom')
-            swipeEnabled: true, // 是否允许在标签之间进行滑动。
-            animationEnabled: false, // 是否在更改标签时显示动画。
-            lazy: true, // 是否根据需要懒惰呈现标签，而不是提前制作，意思是在app打开的时候将底部标签栏全部加载，默认false,推荐改成true哦。
-            // initialRouteName: 'MineTab', // 设置默认的页面组件
-            backBehavior: 'none', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
-            tabBarOptions: {
-                activeTintColor: 'mintcream', // label和icon的前景色 活跃状态下（选中）。
-                inactiveTintColor: 'white', // label和icon的前景色 不活跃状态下(未选中)。
-                style: {height: 40, backgroundColor: '#912CEE'},//整个bar的样式
-                indicatorStyle: {backgroundColor: '#ddd', height: 2},
-                showLabel: true, // 是否显示label，默认开启。
-                showIcon: false,
-                scrollEnabled:true
+        return <ScrollableTableView
+            renderTabBar={()=>
+                <ScrollableTabBar style={{height:40}} barStyle={{height:42}}/>
             }
-        };
-        const TrendingPageTabs = TabNavigator(builderTabPage(),TabNavigatorConfig);
-        return <TrendingPageTabs/>
+            tabBarUnderlineStyle={{height:2,backgroundColor:'#d9d9d9'}}
+            tabBarBackgroundColor={'#912CEE'}
+            tabBarActiveTextColor={'mintcream'}
+            tabBarInactiveTextColor={'white'}
+            locked={true}
+        >
+            {builderTabPage(this.state.timeSpan)}
+        </ScrollableTableView>
     }
     render() {
         return (
@@ -179,28 +167,38 @@ class TrendingPageTab extends Component{
     constructor(props) {
         super(props);
         // 初始状态
+        this.timeSpan=this.props.timeSpan
         this.state = {
             loading:true,
-            dataSource:new ListView.DataSource({rowHasChanged:(r1,r2)=>r1!==r2})
+            dataSource:new ListView.DataSource({rowHasChanged:(r1,r2)=>r1!==r2}),
         };
         this.dataRequrest=new DataRequest(FLAG_MODULE.flag_trending);
     }
-
     componentDidMount() {
-        this.tabLabel = this.props.navigation.state.routeName
-        this.onLoad(this.tabLabel)
-
+        this.tabLabel = this.props.tabLabel
+        this.onLoad(this.timeSpan)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.timeSpan!==this.props.timeSpan){
+            console.log(nextProps.timeSpan)
+            this.timeSpan=nextProps.timeSpan,
+            this.setState({
+                loading:true
+            })
+            this.onLoad(this.timeSpan)
+        }
+    }
     /**
      * 生成URL
      * @returns {XML}
      */
-    genUrl(key){
-        return URL+key;
+    genUrl(timeSpan){
+        return URL+this.tabLabel+"?"+timeSpan;
     }
-    onLoad(text){
-        let url = this.genUrl(text)
+    onLoad(timeSpan){
+        let url = this.genUrl(timeSpan)
+        console.log(url)
         this.dataRequrest.getResponsitory(url)
             .then(result=>{
                 //判断获取的result是否为空，在判断result的items是否为空，如果二者同时不为空设置值，在单独判断result是否为空
@@ -265,7 +263,7 @@ class TrendingPageTab extends Component{
                     titleColor={'#912CEE'}
                     refreshing={this.state.loading}
                     onRefresh={()=>{
-                        this.onLoad(this.tabLabel)
+                        this.onLoad(this.timeSpan)
                     }
                     }
                 />

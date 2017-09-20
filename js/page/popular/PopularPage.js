@@ -19,6 +19,7 @@ import {
     DeviceEventEmitter
 } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation';
+import ScrollableTableView ,{ScrollableTabBar}from 'react-native-scrollable-tab-view' 
 import NavigationBar from "../../common/NavigationBar";
 import DataRequest, {FLAG_MODULE} from "../../util/DataRequest";
 import PopularItem from "../../common/PopularItem";
@@ -68,47 +69,31 @@ export default class PopularPage extends Component {
             KEYS.push(array[i].name)
         }
         function builderTabPage() {
-            let RouteConfigs={}
+            let Tabs=[]
             KEYS.forEach((value,key,array)=>{
-                let item = {
-                    screen: PopularPageTab,
-                    path: '/',
-                    navigationOptions: {
-                        tabBarLabel: value,
-                    }
-                }
-
-                RouteConfigs[value] = item;
+               Tabs.push(<PopularPageTab tabLabel={value}></PopularPageTab>)
             })
-
-            return RouteConfigs
+            return Tabs
         }
-        let TabNavigatorConfig={
-            tabBarPosition: 'top', // 设置tabbar的位置，iOS默认在底部，安卓默认在顶部。（属性值：'top'，'bottom')
-            swipeEnabled: true, // 是否允许在标签之间进行滑动。
-            animationEnabled: false, // 是否在更改标签时显示动画。
-            lazy: true, // 是否根据需要懒惰呈现标签，而不是提前制作，意思是在app打开的时候将底部标签栏全部加载，默认false,推荐改成true哦。
-            // initialRouteName: 'MineTab', // 设置默认的页面组件
-            backBehavior: 'none', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
-            tabBarOptions: {
-                activeTintColor: 'mintcream', // label和icon的前景色 活跃状态下（选中）。
-                inactiveTintColor: 'white', // label和icon的前景色 不活跃状态下(未选中)。
-                style: {height: 40, backgroundColor: '#912CEE'},//整个bar的样式
-                indicatorStyle: {backgroundColor: '#ddd', height: 2},
-                showLabel: true, // 是否显示label，默认开启。
-                showIcon: false,
-                scrollEnabled:true
-            }
-        };
-        const PopularPageTabs = TabNavigator(builderTabPage(),TabNavigatorConfig);
-       return <PopularPageTabs/>
+       return <ScrollableTableView
+               renderTabBar={()=>
+                   <ScrollableTabBar style={{height:40}} barStyle={{height:42}}/>
+               }
+               tabBarUnderlineStyle={{height:2,backgroundColor:'#d9d9d9'}}
+               tabBarBackgroundColor={'#912CEE'}
+               tabBarActiveTextColor={'mintcream'}
+               tabBarInactiveTextColor={'white'}
+               locked={true}
+           >
+                 {builderTabPage()}
+             </ScrollableTableView>
     }
     render() {
         return (
             <View style={{flex:1}}>
                 <NavigationBar
-                title={'最热'}
-                statusBar={{
+                    title={'最热'}
+                    statusBar={{
                     backgroundColor:"#912CEE",
                     barStyle:"light-content",
                     hidden:false
@@ -134,7 +119,7 @@ export default class PopularPage extends Component {
     }
 
     componentDidMount() {
-        this.tabLabel = this.props.navigation.state.routeName
+        this.tabLabel = this.props.tabLabel
         this.onLoad(this.tabLabel)
      
     }

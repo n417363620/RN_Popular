@@ -41,8 +41,7 @@ export default class TrendingItem extends Component {
             }}>
                 <View style={styles.container}>
                     <Text style={styles.title}>{data.fullName}</Text>
-                    <HtmlView style={styles.description}
-                               value={data.description}
+                    <HtmlView  value={data.description}
                                onLinkPress={(url)=>{}}></HtmlView>
                     <Text style={styles.language}>{'Language: '+data.language}</Text>
                     <View style={{height:24,flexDirection:'row'}}>
