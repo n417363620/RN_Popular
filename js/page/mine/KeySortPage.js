@@ -26,16 +26,21 @@ export default class KeySortPage extends Component {
     constructor(props) {
         super(props);
         // 初始状态
-        this.dataArray=[];
-        this.sortArray=[];
-        this.checkedOringinalArray=[];
-        this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_key)
+        console.log(this.props.navigation.state.params.flag)
+        this.flag=this.props.navigation.state.params.flag
+        this.dataArray=[];//原始的所有数据
+        this.checkedOringinalArray=[];//原始的选中的数据
+        if(this.flag===FLAG_LANGUAGE.flag_key){
+            this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_key)
+        }
+        if(this.flag===FLAG_LANGUAGE.flag_language){
+            this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_language)
+        }
         this.state = {
-           checkedArray:[],
+           checkedArray:[],//排序后的选中数据
 
         };
     }
-
     componentDidMount() {
         this.languageDB.fetchData()
             .then(result=>{
@@ -45,7 +50,6 @@ export default class KeySortPage extends Component {
                 console.log(error)
             })
     }
-
     componentWillUnmount() {
         this.setState({
             checkedArray:[]
@@ -63,10 +67,13 @@ export default class KeySortPage extends Component {
         this.checkedOringinalArray=ArrayUtils.cloneArray(checkedArray)
     }
     reset(){
+        this.setState({
+            checkedArray:[]//解决排序控件在离开界面时报错的问题
+        })
         const  reset1Action=NavigationActions.reset({
             index:0,
             actions:[
-                NavigationActions.navigate({routeName:'Root'})
+                NavigationActions.navigate({routeName:'Root'}),
             ]
         })
         this.props.navigation.dispatch(reset1Action)
@@ -86,29 +93,32 @@ export default class KeySortPage extends Component {
             ) 
         }
     }
-    
     save(sorted){
         if (!sorted&&ArrayUtils.isEqual(this.state.checkedArray,this.checkedOringinalArray)){
             this.props.navigation.goBack()
             return
         }
         let finalArray=ArrayUtils.cloneArray(this.dataArray)
-        this.dataArray.forEach((value,key,arrary)=>{
-            let item=this.checkedOringinalArray[key]
-            let index=this.dataArray.indexOf(item)
-            finalArray.splice(index,1,this.state.checkedArray[key])
-        })
+        for(let i=0;i<this.state.checkedArray.length;i++){
+            let item=this.checkedOringinalArray[i] //依次获取排序后的数据去原始数据中挨个替换原始标记数据
+            let index=this.dataArray.indexOf(item)//原始选中数据元素在原始数据的哪一个位置
+            finalArray.splice(index,1,this.state.checkedArray[i])
+        }
         this.languageDB.saveData(finalArray)
-        this.setState({
-            checkedArray:[]
-        })
         this.reset()
     };
     render() {
+        let title=''
+        if(this.flag===FLAG_LANGUAGE.flag_key){
+           title='标签排序'
+        }
+        if(this.flag===FLAG_LANGUAGE.flag_language){
+            title='语言排序'
+        }
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={'标签排序'}
+                    title={title}
                     leftButton={ViewUtil.getLfetBackButton(()=>{
                         this.back()
                     })}

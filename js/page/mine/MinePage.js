@@ -15,6 +15,8 @@ import {
 } from 'react-native'
 import NavigationBar from "../../common/NavigationBar";
 import CustomeKeyPage from "./CustomeKeyPage";
+import {FLAG_MODULE} from "../../util/DataRequest";
+import {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 
 
 export default class MinePage extends Component {
@@ -46,14 +48,24 @@ export default class MinePage extends Component {
                     }}
                 />
                 <Text onPress={()=>{
-                    this.props.navigation.navigate('CustomeKeyPage',{})
+                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_key})
                 }}>自定义标签</Text>
                 <Text onPress={()=>{
-                    this.props.navigation.navigate('KeySortPage')
-                }}>标签排序页</Text>
+                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_language})
+                }}>自定义语言</Text>
                 <Text onPress={()=>{
-                    this.props.navigation.navigate('CustomeKeyPage',{removeKeys:true})
-                }}>移除标签页</Text>
+                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_key,removeKeys:true})
+                }}>移除标签</Text>
+                <Text onPress={()=>{
+                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_language,removeKeys:true})
+                }}>移除语言</Text>
+                <Text onPress={()=>{
+                    this.props.navigation.navigate('KeySortPage',{flag:FLAG_LANGUAGE.flag_key})
+                }}>标签排序</Text>
+                <Text onPress={()=>{
+                    this.props.navigation.navigate('KeySortPage',{flag:FLAG_LANGUAGE.flag_language})
+                }}>语言排序</Text>
+
             </View>
         );
     }

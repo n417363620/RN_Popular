@@ -34,7 +34,6 @@ import WebViewPage from "./common/WebViewPage";
 const PopularScreen = ({ navigation }) => (
     <PopularPage  navigation={navigation} />
 );
-
 // todo: ////////趋势模块下的界面///////////////////////////////////////////////////
 /**
  * 注册趋势界面（起始页！！！！）

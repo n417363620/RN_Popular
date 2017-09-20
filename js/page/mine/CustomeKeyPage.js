@@ -26,7 +26,14 @@ export default class CustomeKeyPage extends Component {
     constructor(props) {
         super(props);
         // 初始状态
-        this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_key)
+        console.log(this.props.navigation.state.params)
+        this.flag=this.props.navigation.state.params.flag
+        if (this.flag===FLAG_LANGUAGE.flag_key){
+            this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_key)
+        }
+        if (this.flag===FLAG_LANGUAGE.flag_language) {
+            this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_language)
+        }
         this.changeValues=[];
         this.state = {
             keys:[],
@@ -57,11 +64,12 @@ export default class CustomeKeyPage extends Component {
               for(let i=0;i<this.changeValues.length;i++){
                   ArrayUtils.removeItem(finalArray,this.changeValues[i])
               }
-              this.languageDB.saveData(finalArray)
+              console.log(finalArray)
+             this.languageDB.saveData(finalArray)
           }else {
               this.languageDB.saveData(this.state.keys)
           }
-         this.reset()
+          this.reset()
     }
     reset(){
         const  reset1Action=NavigationActions.reset({
@@ -93,7 +101,7 @@ export default class CustomeKeyPage extends Component {
         let views=[];
         for(let i=0;i<len;i+=2){
             views.push(
-                <View style={styles.item}>
+                <View style={styles.item} key={i}>
                     {this.renderCheckBox(this.state.keys[i],i)}
                     {i+1<len?  this.renderCheckBox(this.state.keys[i+1],i+1):null}
                  </View>
@@ -106,9 +114,9 @@ export default class CustomeKeyPage extends Component {
             data.checked=!data.checked
         }
        ArrayUtils.updataArray(this.changeValues,data)
+        console.log(this.changeValues)
     }
     renderCheckBox(data,key){
-
         return (<CheckBox key={key}
             style={styles.itemText}
             leftText={data.name}
@@ -122,10 +130,17 @@ export default class CustomeKeyPage extends Component {
           />)
     }
     render() {
-        let rightButtonText=this.state.removeKeys===true?'移除':'保存'
-        let title=this.state.removeKeys===true?'移除标签':'自定义'
+        let rightButtonText
+        let title
+        if (this.flag===FLAG_LANGUAGE.flag_key){
+            rightButtonText=this.state.removeKeys===true?'移除':'保存'
+            title=this.state.removeKeys===true?'移除标签':'自定义标签'
+        }
+        if (this.flag===FLAG_LANGUAGE.flag_language){
+             rightButtonText=this.state.removeKeys===true?'移除':'保存'
+             title=this.state.removeKeys===true?'移除语言':'自定义语言'
+        }
         return (
-
             <View style={styles.container}>
                 <NavigationBar
                     title={title}

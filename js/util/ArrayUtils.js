@@ -50,8 +50,6 @@ export default class ArrayUtils extends Component {
      * @returns {boolean}
      */
    static isEqual(array1,array2){
-       console.log(array1)
-       console.log(array2)
        if(array1===null&&array2===null) return false;
        if(array1.length!==array2.length)return false;
        for (let i=0;i<array1.length;i++){
@@ -68,9 +66,8 @@ export default class ArrayUtils extends Component {
      * @param item
      */
    static removeItem(array,item){
-       for(let i=1;i<array.length;i++){
+       for(let i=0;i<array.length;i++){
            if (item===array[i]){
-               console.log('两个元素相等')
                array.splice(i,1);
            }
        }
