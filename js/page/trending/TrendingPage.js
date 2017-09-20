@@ -20,24 +20,34 @@ import DataRequest, {FLAG_MODULE} from "../../util/DataRequest";
 import TrendingItem from "../../common/TrendingItem";
 import {TabNavigator} from "react-navigation";
 import LanguageResponsitory, {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
+import TimeSpan from '../../model/TimeSpan'
+import Popover, {PopoverTouchable} from 'react-native-modal-popover'
 const URL='https://github.com/trending/'
-
+var timeSpans=[new TimeSpan('今日','since-daily'),
+              new TimeSpan('本周','since-weekly'),
+              new TimeSpan('本月','since-monthly')]
 export default class TrendingPage extends Component {
     // 构造
     constructor(props) {
         super(props);
         // 初始状态
         this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_language)
+
         this.state = {
-            languages:[]
+            languages:[],
+            visible:false,
+            buttonRect:{},
+            title:'趋势 今日▼',
+            path:'since-daily'
         };
     }
+
     componentDidMount() {
         this.languageDB.fetchData()
             .then(result=>{
                 if(result.length===0){
                     this.setState({
-                        languages:{name:'All',path:'All',"checked":true}
+                        languages:[{name:'All',path:'All',"checked":true}]
                     })
                 }else {
                     this.setState({
@@ -50,8 +60,58 @@ export default class TrendingPage extends Component {
                 console.log(error)
             })
         this.obsever=DeviceEventEmitter.addListener('jumptodetail',(data)=>{
-            NavigationBar.Push(this,'WebViewPage',data)
+            NavigationBar.Push(this,'WebViewPage',{data,flag:FLAG_MODULE.flag_trending})
         })
+    }
+
+    showPopover() {
+        this.refs.button.measure((ox, oy, width, height, px, py) => {
+            this.setState({
+                visible: true,
+                buttonRect: {x: px, y: py, width: width, height: height}
+            });
+        });
+    }
+    closePopover() {
+        this.setState({visible: false});
+    }
+     renderItem() {
+        var items=[]
+        for (let i=0;i<timeSpans.length;i++){
+            items.push( <Text style={{color:'white',marginVertical:4}} onPress={()=>{
+                this.closePopover()
+                this.setState({
+                    title:'趋势 ' + timeSpans[i].showText +'▼',
+                     path:timeSpans[i].searchText
+                })
+            }
+            }>{timeSpans[i].showText}</Text>)
+        }
+        return items
+    }
+    renderTitleView(){
+        return <View>
+            <TouchableOpacity ref={'button'} onPress={()=>{this.showPopover()}}>
+                <Text
+                    ellipsizeMode={'head'}
+                    numberOfLines={1}
+                    style={[styles.textButton,{textAlign:'center'}]}>{this.state.title}</Text>
+            </TouchableOpacity>
+            <Popover
+                placement={'bottom'}
+                fromRect={this.state.buttonRect}
+                visible={this.state.visible}
+                contentStyle={styles.popoverContent}
+                arrowStyle={styles.popoverArrow}
+                backgroundStyle={styles.popoverBackground}
+                onClose={()=>{
+                    this.closePopover()
+                }}
+            >
+                {this.renderItem()}
+            </Popover>
+        </View>
+
     }
     //todo 底部按钮注册位置
     renderTabBar(array){
@@ -100,7 +160,7 @@ export default class TrendingPage extends Component {
         return (
             <View style={{flex:1}}>
                 <NavigationBar
-                    title={'趋势'}
+                    titleView={this.renderTitleView()}
                     statusBar={{
                         backgroundColor:"#912CEE",
                         barStyle:"light-content",
@@ -217,6 +277,22 @@ class TrendingPageTab extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    }
+    },
+    popoverContent: {
+        paddingVertical:10,
+        paddingHorizontal:36,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        borderRadius: 4,
+    },
+    popoverArrow: {
+        borderTopColor: 'rgba(0,0,0,0.5)',
+    },
+    popoverBackground: {
+        backgroundColor: 'rgba(0, 0, 0, 0.1)'
+    },
+    textButton:{
+        fontSize:18,
+        color:'white'
+    },
 });
 

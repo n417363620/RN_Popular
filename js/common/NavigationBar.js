@@ -131,8 +131,8 @@ export default class NavigationBar extends Component {
             <View style={styles.statusBarView}><StatusBar {...this.props.statusBar}/></View>:null
         let titleView=this.props.titleView?this.props.titleView:
                       <Text ellipsizeMode={'head'}
-                            numberOfLines={1}
-                          style={styles.title}>{this.props.title}</Text>
+                             numberOfLines={1}
+                             style={styles.title}>{this.props.title}</Text>
         let content=this.props.hide?null:
             <View style={styles.nav}>
                          {this.getNavButtonElement(this.props.leftButton)}
@@ -148,8 +148,6 @@ export default class NavigationBar extends Component {
             </View>
         );
     }
-
-    static
 }
 
 const styles = StyleSheet.create({

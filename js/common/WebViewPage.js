@@ -17,15 +17,24 @@ import {
 } from 'react-native'
 import NavigationBar from "./NavigationBar";
 import ViewUtil from "../util/ViewUtil";
-
+import {FLAG_MODULE} from "../util/DataRequest";
+const trendingUrl='https://github.com/'
 export default class WebViewPage extends Component {
     // 构造
     constructor(props) {
         super(props);
         // 初始状态
+        console.log('传输过来的数据')
         console.log(this.props.navigation.state.params)
-        this.url=this.props.navigation.state.params.html_url
-        this.title=this.props.navigation.state.params.full_name
+        if(this.props.navigation.state.params.flag===FLAG_MODULE.flag_popular){
+            this.url=this.props.navigation.state.params.data.html_url
+            this.title=this.props.navigation.state.params.data.full_name
+        }
+        if(this.props.navigation.state.params.flag===FLAG_MODULE.flag_trending){
+            this.url=trendingUrl+this.props.navigation.state.params.data.fullName
+            console.log(this.url)
+            this.title=this.props.navigation.state.params.data.fullName
+        }
         this.state = {
             url:this.url,
             title:this.title,

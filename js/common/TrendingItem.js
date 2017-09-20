@@ -13,7 +13,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
-
+import HtmlView from 'react-native-htmlview'
 export default class TrendingItem extends Component {
     // 构造
     constructor(props) {
@@ -25,6 +25,13 @@ export default class TrendingItem extends Component {
         goDetail:PropTypes.func,
         collect:PropTypes.func
     }
+    _renderAvatar(data){
+        let imgs=[]
+        for(let i=0;i<data.length;i++){
+            imgs.push( <Image style={styles.avatarimg} source={{uri:data[i]}}/>)
+        }
+        return imgs
+    }
     render() {
         let data=this.props.data
         return(
@@ -34,16 +41,19 @@ export default class TrendingItem extends Component {
             }}>
                 <View style={styles.container}>
                     <Text style={styles.title}>{data.fullName}</Text>
-                    <Text style={styles.description}>{data.description?data.description:'no description'}</Text>
+                    <HtmlView style={styles.description}
+                               value={data.description}
+                               onLinkPress={(url)=>{}}></HtmlView>
                     <Text style={styles.language}>{'Language: '+data.language}</Text>
+                    <View style={{height:24,flexDirection:'row'}}>
+                        <Text style={styles.language}>{data.meta}</Text>
+                        <Text style={styles.language}>     stars:  </Text>
+                        <Text style={styles.language}>{data.starCount}</Text>
+                    </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <View style={{height:24,flexDirection:'row'}}>
-                            <Text style={styles.language}>Author:  </Text>
-                            <Image style={styles.avatarimg} source={{uri:data.contributors[0]}}/>
-                        </View>
-                        <View style={{height:24,flexDirection:'row'}}>
-                            <Text style={styles.language}>stars:  </Text>
-                            <Text style={styles.language}>{data.starCount}</Text>
+                            <Text style={styles.language}>Build By:  </Text>
+                            {this._renderAvatar(data.contributors)}
                         </View>
                         <TouchableOpacity onPress={()=>{
                             this.props.collect(data)
@@ -70,7 +80,6 @@ const styles = StyleSheet.create({
         marginBottom:4
     },
     description:{
-        fontSize:14,
         color:'#717171',
         marginBottom:4
     },
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
     language:{
         alignItems:'center',
         fontSize:14,
-        color:'#121212',
+        color:'#717171',
         marginBottom:4
     },
     cell:{
