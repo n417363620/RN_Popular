@@ -23,6 +23,7 @@ import NavigationBar from "../../common/NavigationBar";
 import DataRequest, {FLAG_MODULE} from "../../util/DataRequest";
 import PopularItem from "../../common/PopularItem";
 import LanguageResponsitory,{FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
+import ViewUtil from "../../util/ViewUtil";
 const KEYS=['Android','IOS','React-Native']
 const URL='https://api.github.com/search/repositories?q=';
 const QUERY_STR='&sort=stars'
@@ -34,7 +35,8 @@ export default class PopularPage extends Component {
         // 初始状态
         this.languageDB=new LanguageResponsitory(FLAG_LANGUAGE.flag_key)
         this.state = {
-            languages:[]
+            languages:[],
+            isVisibel:false
         };
     }
     componentDidMount() {
@@ -55,7 +57,7 @@ export default class PopularPage extends Component {
                 console.log(error)
             })
         this.obsever=DeviceEventEmitter.addListener('jumptodetail',(data)=>{
-            NavigationBar.Push(this,'WebViewPage',data)
+            NavigationBar.Push(this,'WebViewPage',{data,flag:FLAG_MODULE.flag_popular})
         })
     }
     //todo 底部按钮注册位置
