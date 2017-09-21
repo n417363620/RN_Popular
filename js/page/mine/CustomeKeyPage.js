@@ -72,13 +72,14 @@ export default class CustomeKeyPage extends Component {
           this.reset()
     }
     reset(){
-        const  reset1Action=NavigationActions.reset({
+         /* const  reset1Action=NavigationActions.reset({
             index:0,
             actions:[
-                NavigationActions.navigate({routeName:'Root'})
+                NavigationActions.navigate({routeName:'Mine'})
             ]
         })
-        this.props.navigation.dispatch(reset1Action)
+        this.props.navigation.dispatch(reset1Action)*/
+       this.props.navigation.navigate('TransitionPage',{flag_Tab:this.flag})
     }
     back(){
         if (this.changeValues.length===0){

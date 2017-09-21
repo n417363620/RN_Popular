@@ -11,12 +11,14 @@ import {
     Text,
     Image,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native'
 import NavigationBar from "../../common/NavigationBar";
 import CustomeKeyPage from "./CustomeKeyPage";
 import {FLAG_MODULE} from "../../util/DataRequest";
 import {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
+import {NavigationActions} from "react-navigation";
+
 
 
 export default class MinePage extends Component {
@@ -24,15 +26,23 @@ export default class MinePage extends Component {
     constructor(props) {
         super(props);
         // 初始状态
+        console.log(this.props.navigation.state.params)
         this.state = {
 
         };
     }
-
     componentDidMount() {
-      this.timer =  setTimeout(()=>{this.props.navigation.navigate('PopularTab')},200)
+      /*this.timer =  setTimeout(()=>{
+          if (this.flag_Tab===FLAG_PAGETAB.flag_popular){
+              this.props.navigation.navigate('PopularTab')
+          }
+          if (this.flag_Tab===FLAG_PAGETAB.flag_trending){
+              this.props.navigation.navigate('TrendingTab')
+          }else {
+              this.props.navigation.navigate('PopularTab')
+          }
+      },5000)*/
     }
-
     componentWillUnmount() {
         clearTimeout(this.timer)
     }

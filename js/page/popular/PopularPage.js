@@ -60,6 +60,10 @@ export default class PopularPage extends Component {
         this.obsever=DeviceEventEmitter.addListener('jumptodetail',(data)=>{
             NavigationBar.Push(this,'WebViewPage',{data,flag:FLAG_MODULE.flag_popular})
         })
+        this.obsever1=DeviceEventEmitter.addListener('refreshPopular',(boolean)=>{
+            DeviceEventEmitter.emit('toast','刷新')
+            console.log('刷新')
+        })
     }
     //todo 底部按钮注册位置
     renderTabBar(array){

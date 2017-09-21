@@ -28,15 +28,16 @@ export default class WelcomePage extends Component {
     const resetAction = NavigationActions.reset({
         index: 0,
         actions: [
-            NavigationActions.navigate({ routeName: 'Home'}),
+            NavigationActions.navigate({ routeName: 'HomePage'}),
         ]
     })
     this.props.navigation.dispatch(resetAction)
     }
     componentDidMount() {
        this.timer = setTimeout(()=>{
+           //  this.props.navigation.navigate('Home')
             this.reset();
-        },500)
+        },1500)
     }
 
     componentUnWillMount() {

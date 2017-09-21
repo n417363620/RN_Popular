@@ -25,7 +25,7 @@ const RouteConfigs = {
             title: '欢迎页',
         }),
     },
-    Home: {
+    HomePage: {
         screen: HomePage,
         navigationOptions: ({navigation}) => ({
             title: '主页',

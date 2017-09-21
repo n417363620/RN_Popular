@@ -10,11 +10,9 @@ import {
     StyleSheet,
     Text,
     Image,
-    View,
-    DeviceEventEmitter
+    View
 } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import Toast ,{DURATION} from 'react-native-easy-toast'
 /*import TabNavigator from 'react-native-tab-navigator'*/
 import PopularPage from "./page/popular/PopularPage";
 import MinePage from "./page/mine/MinePage";
@@ -23,7 +21,9 @@ import FavoritePage from "./page/favorite/FavoritePage";
 import CustomeKeyPage from "./page/mine/CustomeKeyPage";
 import KeySortPage from "./page/mine/KeySortPage";
 import WebViewPage from "./common/WebViewPage";
-
+import TestStacksInTabs from "./page/favorite/TestStacksInTabs";
+import * as CardStackStyleInterpolator from "react-navigation";
+import TransitionPage from "./util/TransitionPage";
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
 /**
@@ -34,6 +34,17 @@ import WebViewPage from "./common/WebViewPage";
 const PopularScreen = ({ navigation }) => (
     <PopularPage  navigation={navigation} />
 );
+
+const PopularTab = StackNavigator({
+    Popular: {
+        screen: PopularScreen,
+        path: './page/popular/PopularPage',
+        navigationOptions: {
+            title: 'Welcome',
+            header:null,
+        },
+    },
+});
 // todo: ////////趋势模块下的界面///////////////////////////////////////////////////
 /**
  * 注册趋势界面（起始页！！！！）
@@ -44,6 +55,16 @@ const TrendingScreen = ({ navigation }) => (
     <TrendingPage  navigation={navigation} />
 );
 
+const TrendingTab = StackNavigator({
+    Trending: {
+        screen: TrendingScreen,
+        path: './page/trending/TrendingPage',
+        navigationOptions: {
+            title: 'Welcome',
+            header:null,
+        },
+    },
+});
 // todo: ////////收藏模块下的界面///////////////////////////////////////////////////
 /**
  * 注册收藏界面（起始页！！！！）
@@ -53,6 +74,16 @@ const TrendingScreen = ({ navigation }) => (
 const FavorityScreen = ({ navigation }) => (
     <FavoritePage  navigation={navigation} />
 );
+const FavoriteTab = StackNavigator({
+    Favorite: {
+        screen: FavorityScreen,
+        path: './page/favorite/FavoritePage',
+        navigationOptions: {
+            title: 'Welcome',
+            header:null,
+        },
+    },
+});
 // todo: ////////我的模块下的界面///////////////////////////////////////////////////
 /**
  * 注册我的界面(起始页！！！！)
@@ -87,13 +118,50 @@ const KeySortScreen = ({ navigation }) => (
 const WebViewScreen = ({ navigation }) => (
     <WebViewPage  navigation={navigation} />
 );
-const TabNav = TabNavigator(
+/**
+ * 跳转过渡页
+ * @param navigation
+ * @constructor
+ */
+const TransitionScreen = ({ navigation }) => (
+    <TransitionPage  navigation={navigation} />
+);
+const MineTab = StackNavigator({
+    Mine: {
+        screen: MineScreen,
+        path: './page/mine/MinePage',
+        navigationOptions: {
+            title: 'Welcome',
+            header:null,
+        },
+    },
+    CustomeKeyPage: {
+        screen: CustomerKeyScreen,
+        path: './page/mine/CustomeKeyPage',
+        navigationOptions: ({ navigation }) => ({
+            title: `${navigation.state.params.name}'s CustomeKeyPage!`,
+            header:null,
+            tabBarVisible:false
+        }),
+    },
+    KeySortPage: {
+        screen: KeySortScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header:null,
+            tabBarVisible:false
+        },
+    },
+});
+
+
+//todo 底部按钮注册位置
+const StacksInTabs = TabNavigator(
     {
         PopularTab: {
-            screen: PopularScreen,
-            path: './page/popular/PopularPage',
+            screen: PopularTab,
+            path: '/',
             navigationOptions: {
-                header:null,
                 tabBarLabel: '最热',
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Image style={[styles.tb_OffImage,{tintColor:tintColor}]} source={require('../res/image/ic_popular.png')} />
@@ -101,10 +169,9 @@ const TabNav = TabNavigator(
             },
         },
         TrendingTab: {
-            screen: TrendingScreen,
-            path: './page/trending/TrendingPage',
+            screen: TrendingTab,
+            path: '/',
             navigationOptions: {
-                header:null,
                 tabBarLabel: '趋势',
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Image style={[styles.tb_OffImage,{tintColor:tintColor}]} source={require('../res/image/ic_trending.png')} />
@@ -112,10 +179,9 @@ const TabNav = TabNavigator(
             },
         },
         FavoriteTab: {
-            screen: FavorityScreen,
-            path: './page/favorite/FavoritePage',
+            screen: FavoriteTab,
+            path: '/',
             navigationOptions: {
-                header:null,
                 tabBarLabel: '收藏',
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Image style={[styles.tb_OffImage,{tintColor:tintColor}]} source={require('../res/image/ic_favorite.png')} />
@@ -123,11 +189,10 @@ const TabNav = TabNavigator(
             },
         },
         MineTab: {
-            screen: MineScreen,
-            path: './page/mine/MinePage',
+            screen: MineTab,
+            path: '/',
             navigationOptions: {
                 tabBarLabel: '我的',
-                header:null,
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Image style={[styles.tb_OffImage,{tintColor:tintColor}]} source={require('../res/image/ic_mine.png')} />
                 ),
@@ -146,8 +211,8 @@ const TabNav = TabNavigator(
             // 因为第二个tabbar是在页面中创建的，所以前景色的设置对其无效，当然也可以通过设置tintColor使其生效
             activeTintColor: '#912CEE', // label和icon的前景色 活跃状态下（选中）。
             inactiveTintColor: 'gray', // label和icon的前景色 不活跃状态下(未选中)。
-            style: {height: 60, backgroundColor: 'white', borderWidth: 1, borderColor: '#ddd'},//整个bar的样式
-            indicatorStyle: {height: 0},
+            style:{height:60,backgroundColor:'white',borderWidth:1,borderColor:'#ddd'},//整个bar的样式
+            indicatorStyle:{height:0},
             //activeBackgroundColor:'white', //label和icon的背景色 活跃状态下（选中） 。
             //  inactiveBackgroundColor:'white', // label和icon的背景色 不活跃状态下（未选中）。
             showLabel: true, // 是否显示label，默认开启。
@@ -168,65 +233,57 @@ const TabNav = TabNavigator(
             // indicatorStyle:{}, // 标签指示器的样式对象（选项卡底部的行）。安卓底部会多出一条线，可以将height设置为0来暂时解决这个问题。
             // labelStyle:{}, // label的样式。
             // iconStyle:{}, // 图标的样式。
-        }
-    }
+        }}
 );
-
 const StacksOverTabs = StackNavigator({
     Root: {
-        screen: TabNav,
+        screen: StacksInTabs,
     },
-    CustomeKeyPage: {
-        screen: CustomerKeyScreen,
-        navigationOptions: {
-            title: 'Notifications',
-            header:null,
-        },
-    },
-    KeySortPage: {
-        screen: KeySortScreen,
-        navigationOptions: {
-            title: 'Notifications',
-            header:null,
-        },
-    },
+    //公共界面不注入单独模块中
     WebViewPage:{
         screen:WebViewScreen,
         navigationOptions:{
             header:null,
             title:'WebView'
         }
-    }
+    },
+    TransitionPage:{
+      screen:TransitionScreen,
+      navigationOptions:{
+          header:null
+      }
+    },
+    Test:{
+        screen:TestStacksInTabs,
+        navigationOptions:{
+            header:null
+        }
+    },
+},{
+    initialRouteName: 'Root',
+    initialRouteParams: {initPara: '初始页面参数'},
+    navigationOptions: {
+        title: '标题',
+        headerTitleStyle: {fontSize: 18, color: 'white'},
+        headerStyle: {height: 48, backgroundColor: '#912CEE'},
+        header:null,
+    },
+    paths: './page/favorite/TestStackInTabs',
+    mode: 'card',
+    headerMode: 'screen',
+    cardStyle: {backgroundColor: "#ffffff"},
+    transitionConfig: (() => ({
+        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+    })),
+    onTransitionStart: (() => {
+        console.log('页面跳转动画开始');
+    }),
+    onTransitionEnd: (() => {
+        console.log('页面跳转动画结束');
+    }),
 });
 
-export default class Index extends Component {
-    // 构造
-    constructor(props) {
-        super(props);
-        // 初始状态
-        this.state = {
-            selectedTab:'tb_popular'
-        };
-      }
-
-    componentDidMount() {
-        this.subscription = DeviceEventEmitter.addListener('toast',(text)=>{
-            this.toast.show(text,DURATION.LENGTH_SHORT)
-        })
-    }
-
-    componentWillUnmount() {
-        this.subscription.remove()
-    }
-    render() {
-        return (
-            <View style={{flex:1}}>
-                <StacksOverTabs/>
-                <Toast ref={toast=>this.toast=toast}></Toast>
-            </View>
-        );
-    }
-}
+export default StacksOverTabs;
 
 const styles = StyleSheet.create({
     container: {
@@ -245,7 +302,6 @@ const styles = StyleSheet.create({
         width:24,
 
     },
-
 });
 
 

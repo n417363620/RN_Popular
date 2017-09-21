@@ -53,7 +53,8 @@ export default class FavoritePage extends Component {
                 />
 
                     <Text ref={'button'} style={{height:24,width:100,backgroundColor:'red'}}  onPress={() => {
-                        this.showPopover()
+                         //this.showPopover()
+                        NavigationBar.Push(this,'Test')
                     }}>弹出弹框</Text>
                     <Popover
                         fromRect={this.state.buttonRect}

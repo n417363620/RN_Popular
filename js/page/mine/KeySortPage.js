@@ -73,7 +73,7 @@ export default class KeySortPage extends Component {
         const  reset1Action=NavigationActions.reset({
             index:0,
             actions:[
-                NavigationActions.navigate({routeName:'Root'}),
+                NavigationActions.navigate({routeName:'Mine'}),
             ]
         })
         this.props.navigation.dispatch(reset1Action)
