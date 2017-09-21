@@ -70,13 +70,14 @@ export default class KeySortPage extends Component {
         this.setState({
             checkedArray:[]//解决排序控件在离开界面时报错的问题
         })
-        const  reset1Action=NavigationActions.reset({
+       /* const  reset1Action=NavigationActions.reset({
             index:0,
             actions:[
                 NavigationActions.navigate({routeName:'Mine'}),
             ]
         })
-        this.props.navigation.dispatch(reset1Action)
+        this.props.navigation.dispatch(reset1Action)*/
+        this.props.navigation.navigate('TransitionPage',{flag_Tab:this.flag})
     }
     back(){
         if (ArrayUtils.isEqual(this.state.checkedArray,this.checkedOringinalArray)){
