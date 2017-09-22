@@ -42,7 +42,33 @@ export default class ViewUtil extends Component {
             <Text style={styles.textButton}>{text}</Text>
         </TouchableOpacity>
     }
-
+    /**
+     * 右侧图片按钮
+     * @param text
+     * @param callBack
+     * @returns {XML}
+     */
+    static getRightImageButton(source, callBack,state) {
+        return <TouchableOpacity style={styles.rightButtonPadding}
+                                 onPress={callBack}
+        >
+            <Image source={source}
+                style={state?[styles.imageButton,{tintColor:'#912CEE'}]:styles.imageButton}></Image>
+        </TouchableOpacity>
+    }
+    /**
+     * 右侧图片按钮组
+     * @param text
+     * @param callBack
+     * @returns {XML}
+     */
+    static getRightImageButtons(urls, callBacks) {
+        return <TouchableOpacity style={styles.rightButtonPadding}
+                                 onPress={callBack}
+        >
+            <Image style={styles.imageButton}></Image>
+        </TouchableOpacity>
+    }
     /**
      * 中间文字按钮标题
      * @param text

@@ -61,11 +61,12 @@ export default class PopularPage extends Component {
                 console.log(error)
             })
         this.obsever=DeviceEventEmitter.addListener('jumptodetail',(data)=>{
-            NavigationBar.Push(this,'WebViewPage',{data,flag:FLAG_MODULE.flag_popular})
-        })
-        this.obsever1=DeviceEventEmitter.addListener('refreshPopular',(boolean)=>{
-            DeviceEventEmitter.emit('toast','刷新')
-            console.log('刷新')
+            NavigationBar.Push(this,'WebViewPage',
+                {        data,
+                    flag:FLAG_MODULE.flag_popular,
+                    callback: (data)=>{
+                       DeviceEventEmitter.emit('needFreshPopular',true); // 打印值为：'回调参数'
+                    }})
         })
     }
     //todo 底部按钮注册位置
@@ -145,8 +146,18 @@ export default class PopularPage extends Component {
     componentDidMount() {
         this.tabLabel = this.props.tabLabel
         this.onLoad(this.tabLabel)
-     
+        this.observer=DeviceEventEmitter.addListener('needFreshPopular',(isfresh)=>{
+            console.log('刷新页面');
+            this.setState({
+                loading:true
+            })
+            this.onLoad(this.tabLabel)
+        })
     }
+
+     componentWillUnmount() {
+         this.observer.remove()
+     }
      /**
       * 跟新Project每一项收藏的状态
       */

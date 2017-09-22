@@ -17,14 +17,14 @@ import {
 } from 'react-native'
 import ScrollableTableView ,{ScrollableTabBar}from 'react-native-scrollable-tab-view'
 import NavigationBar from "../../common/NavigationBar";
-import DataRequest, {FLAG_MODULE as FLAG_PROJECTTYPE, FLAG_MODULE} from "../../util/DataRequest";
+import DataRequest, { FLAG_MODULE} from "../../util/DataRequest";
 import TrendingItem from "../../common/TrendingItem";
 import {TabNavigator} from "react-navigation";
 import LanguageResponsitory, {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 import TimeSpan from '../../model/TimeSpan'
 import Popover, {PopoverTouchable} from 'react-native-modal-popover'
 import ArrayUtils from "../../util/ArrayUtils";
-import ProjectCollectResponsitory from "../../expand/ProjectCollectResponsitory";
+import ProjectCollectResponsitory,{FLAG_PROJECTTYPE} from "../../expand/ProjectCollectResponsitory";
 import TrendingModel from "../../model/PreojectModel";
 const URL='https://github.com/trending/'
 var timeSpans=[new TimeSpan('今日','since=daily'),
@@ -63,7 +63,12 @@ export default class TrendingPage extends Component {
                 console.log(error)
             })
         this.obsever=DeviceEventEmitter.addListener('jumptodetail',(data)=>{
-            NavigationBar.Push(this,'WebViewPage',{data,flag:FLAG_MODULE.flag_trending})
+            NavigationBar.Push(this,'WebViewPage',
+                                                {data,
+                                                 flag:FLAG_MODULE.flag_trending,
+                                                   callback: (data)=>{
+                                                       DeviceEventEmitter.emit('needFreshTrending',true); // 打印值为：'回调参数'
+                                                   }})
         })
     }
 
@@ -211,6 +216,13 @@ class TrendingPageTab extends Component{
     componentDidMount() {
         this.tabLabel = this.props.tabLabel
         this.onLoad(this.timeSpan)
+        this.observer=DeviceEventEmitter.addListener('needFreshTrending',(isfresh)=>{
+            console.log('刷新页面');
+            this.setState({
+                loading:true
+            })
+            this.onLoad(this.tabLabel)
+        })
     }
 
     componentWillReceiveProps(nextProps) {

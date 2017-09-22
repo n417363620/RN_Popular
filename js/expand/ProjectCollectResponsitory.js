@@ -20,6 +20,7 @@ export var FLAG_PROJECTTYPE={flag_popular:'flag_popular_',flag_trending:'flag_tr
 export default class ProjectCollectResponsitory {
      constructor(flag) {
         this.flag=flag;
+        console.log(this.flag)
      }
     /**
      * 保存收藏项目
@@ -29,6 +30,7 @@ export default class ProjectCollectResponsitory {
      * @returns {Promise}
      */
     saveData(key,data){
+        console.log('保存数据。。。')
         return new Promise((success,failure)=>{
             AsyncStorage.setItem(key,JSON.stringify(data),(error,result)=>{
                 if(error){
