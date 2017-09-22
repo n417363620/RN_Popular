@@ -27,13 +27,13 @@ export default class WebViewPage extends Component {
         console.log('传输过来的数据')
         console.log(this.props.navigation.state.params)
         if(this.props.navigation.state.params.flag===FLAG_MODULE.flag_popular){
-            this.url=this.props.navigation.state.params.data.html_url
-            this.title=this.props.navigation.state.params.data.full_name
+            this.url=this.props.navigation.state.params.data.item.html_url
+            this.title=this.props.navigation.state.params.data.item.full_name
         }
         if(this.props.navigation.state.params.flag===FLAG_MODULE.flag_trending){
-            this.url=trendingUrl+this.props.navigation.state.params.data.fullName
+            this.url=trendingUrl+this.props.navigation.state.params.data.item.fullName
             console.log(this.url)
-            this.title=this.props.navigation.state.params.data.fullName
+            this.title=this.props.navigation.state.params.data.item.fullName
         }
         this.state = {
             url:this.url,

@@ -13,7 +13,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
-import NavigationBar from "../common/NavigationBar";
+import NavigationBar from "./NavigationBar";
 import {NavigationActions} from "react-navigation";
 
 export default class TransitionPage extends Component {
@@ -22,10 +22,6 @@ export default class TransitionPage extends Component {
         super(props);
         // 初始状态
         console.log(this.props.navigation.state.params)
-        this.state = {};
-    }
-
-    componentWillMount() {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -34,21 +30,10 @@ export default class TransitionPage extends Component {
         })
         this.props.navigation.dispatch(resetAction)
     }
-    componentDidMount() {
 
-    }
     render() {
         return (
-            <View style={styles.container}>
-              < NavigationBar
-                title={'我的'}
-                statusBar={{
-                backgroundColor:"#912CEE",
-                barStyle:"light-content",
-                hidden:false
-            }}
-                />
-            </View>
+            <View></View>
         );
     }
 }

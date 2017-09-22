@@ -19,11 +19,18 @@ export default class TrendingItem extends Component {
     constructor(props) {
         super(props);
         // 初始状态
-        this.state = {};
+        this.state = {
+            checked:this.props.data.isFavorite
+        };
     }
     static propTypes={
         goDetail:PropTypes.func,
         collect:PropTypes.func
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            checked:nextProps.data.isFavorite
+        })
     }
     _renderAvatar(data){
         let imgs=[]
@@ -33,7 +40,7 @@ export default class TrendingItem extends Component {
         return imgs
     }
     render() {
-        let data=this.props.data
+        let data=this.props.data.item
         return(
 
             <TouchableOpacity style={styles.cell} onPress={()=>{
@@ -55,9 +62,10 @@ export default class TrendingItem extends Component {
                             {this._renderAvatar(data.contributors)}
                         </View>
                         <TouchableOpacity onPress={()=>{
-                            this.props.collect(data)
+                            this.props.collect(data,!this.state.checked)
+                            this.setState({checked:!this.state.checked})
                         }}>
-                            <Image style={styles.collectimg} source={require('../../res/image/ic_collect.png')}/>
+                            <Image style={this.state.checked?[styles.collectimg,{tintColor:'#912CEE'}]:styles.collectimg} source={require('../../res/image/ic_collect.png')}/>
                         </TouchableOpacity>
                     </View>
                 </View>

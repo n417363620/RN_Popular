@@ -23,7 +23,7 @@ import KeySortPage from "./page/mine/KeySortPage";
 import WebViewPage from "./common/WebViewPage";
 import TestStacksInTabs from "./page/favorite/TestStacksInTabs";
 import * as CardStackStyleInterpolator from "react-navigation";
-import TransitionPage from "./util/TransitionPage";
+import TransitionPage from "./common/TransitionPage";
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
 /**

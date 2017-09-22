@@ -72,6 +72,28 @@ export default class ArrayUtils extends Component {
            }
        }
    }
+
+    /**
+     * 判断是否收藏过项目
+     * @param item
+     * @param items
+     * @returns {boolean}
+     */
+   static checkCollect(item,items){
+       for(let i=0;i<items.length;i++){
+           if (item.id){
+               if(item.id.toString()===items[i]){
+                   return true
+               }
+           }else {
+               if(item.fullName===items[i]){
+                   return true
+               }
+           }
+
+       }
+       return false
+   }
 }
 
 
