@@ -38,7 +38,7 @@ export default class PopularItem extends Component {
         return(
 
            <TouchableOpacity style={styles.cell} onPress={()=>{
-               this.props.goDetail(data)
+               this.props.goDetail(this.props.data)
            }}>
                <View style={styles.container}>
                    <Text style={styles.title}>{data.full_name}</Text>
