@@ -115,5 +115,56 @@ export default class ProjectCollectResponsitory {
             })
         })
     }
+
+    /**
+     * 根据Key来提出item数据
+     * @param key
+     * @returns {Promise}
+     */
+    fetchItemData(key){
+        return new Promise((resolve,reject)=>{
+            AsyncStorage.getItem(key,(error,result)=>{
+                if (error){
+                    console.log('提取数据失败')
+                    reject(error)
+                }else {
+                    if (!result){
+                        console.log('不存在该数据');
+                        reject('不存在的数据')
+                    }else {
+                        resolve(result)
+                    }
+                }
+            })
+        })
+    }
+
+    /**
+     * 获取所有的数据
+     * @returns {Promise}
+     */
+    fetchAllData(){
+        return new Promise((resolve,reject)=>{
+            this.fetchKeyData().then(keys=>{
+                var items=[]
+                if (keys){
+                    AsyncStorage.multiGet(keys,(error,result)=>{
+                        try {
+                            result.map((item,i,store)=>{
+                                items.push(JSON.parse(store[i][1]))
+                            })
+                            resolve(items)
+                        }catch(error){
+                            reject(error)
+                        }
+                    })
+                }else {
+                    resolve(items)
+                }
+            }).catch(error=>{
+                reject(error)
+            })
+        })
+    }
 }
 

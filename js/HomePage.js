@@ -24,6 +24,8 @@ import WebViewPage from "./common/WebViewPage";
 import TestStacksInTabs from "./page/favorite/TestStacksInTabs";
 import * as CardStackStyleInterpolator from "react-navigation";
 import TransitionPage from "./common/TransitionPage";
+import IntroducePage from "./page/mine/IntroducePage";
+import AboutAuthor from "./page/mine/AboutAuthor";
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
 /**
@@ -109,22 +111,17 @@ const CustomerKeyScreen = ({ navigation }) => (
 const KeySortScreen = ({ navigation }) => (
     <KeySortPage  navigation={navigation} />
 );
-
 /**
- * 公共的浏览器页
- * @param navigation
- * @constructor
+ * 项目介绍页面
  */
-const WebViewScreen = ({ navigation }) => (
-    <WebViewPage  navigation={navigation} />
+const IntroduceScreen = ({ navigation }) => (
+    <IntroducePage  navigation={navigation} />
 );
 /**
- * 跳转过渡页
- * @param navigation
- * @constructor
+ *作者 介绍页面
  */
-const TransitionScreen = ({ navigation }) => (
-    <TransitionPage  navigation={navigation} />
+const AboutAuthorScreen = ({ navigation }) => (
+    <AboutAuthor  navigation={navigation} />
 );
 const MineTab = StackNavigator({
     Mine: {
@@ -152,7 +149,42 @@ const MineTab = StackNavigator({
             tabBarVisible:false
         },
     },
+    IntroducePage: {
+        screen: IntroduceScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header:null,
+            tabBarVisible:false
+        },
+    },
+    AboutAuthorPage: {
+        screen: AboutAuthorScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header: null,
+            tabBarVisible: false
+        },
+    }
 });
+
+
+/**
+ * 公共的浏览器页
+ * @param navigation
+ * @constructor
+ */
+const WebViewScreen = ({ navigation }) => (
+    <WebViewPage  navigation={navigation} />
+);
+/**
+ * 跳转过渡页
+ * @param navigation
+ * @constructor
+ */
+const TransitionScreen = ({ navigation }) => (
+    <TransitionPage  navigation={navigation} />
+);
+
 
 
 //todo 底部按钮注册位置

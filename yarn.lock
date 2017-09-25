@@ -3559,6 +3559,10 @@ react-native-modal-popover@^0.0.2:
     lodash.debounce "^4.0.8"
     prop-types "^15.5.10"
 
+react-native-parallax-scroll-view@^0.19.0:
+  version "0.19.0"
+  resolved "http://registry.npm.taobao.org/react-native-parallax-scroll-view/download/react-native-parallax-scroll-view-0.19.0.tgz#23b9af1f13249a610f4641e2582a58997df7d80a"
+
 react-native-scrollable-tab-view@^0.6.7:
   version "0.6.7"
   resolved "http://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.6.7.tgz#3a5fe8a4bd5bc7eb023f306099323bbd9cc284a2"

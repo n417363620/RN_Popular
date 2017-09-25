@@ -72,6 +72,9 @@ export default class TrendingPage extends Component {
         })
     }
 
+    componentWillUnmount() {
+        this.obsever.remove()
+    }
     showPopover() {
         this.refs.button.measure((ox, oy, width, height, px, py) => {
             this.setState({
@@ -279,11 +282,12 @@ class TrendingPageTab extends Component{
         // this.props.navigation.navigate('Android')
     }
     collectResponsitory(data,isFavorite){
+        data.isFavorite=isFavorite
         if (isFavorite) {
-            this.projectCollectResponsitory.saveData(data.fullName.toString(),data)
+            this.projectCollectResponsitory.saveData(data.item.fullName.toString(),data)
         }
         if(!isFavorite) {
-            this.projectCollectResponsitory.removeData(data.fullName.toString())
+            this.projectCollectResponsitory.removeData(data.item.fullName.toString())
         }
     }
     _renderRow(data){

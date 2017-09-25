@@ -66,16 +66,16 @@ export default class WebViewPage extends Component {
        if(this.props.navigation.state.params.flag===FLAG_MODULE.flag_popular){
             if (isAdd){
                 console.log('保存');
-                this.projectCollectResponsitory.saveData(this.item.item.id.toString(),this.item.item)
+                this.projectCollectResponsitory.saveData(this.item.item.id.toString(),this.item)
             }else {
-                this.projectCollectResponsitory.removeData(this.item.item.id.toString(),this.item.item)
+                this.projectCollectResponsitory.removeData(this.item.item.id.toString())
             }
         }
         if(this.props.navigation.state.params.flag===FLAG_MODULE.flag_trending){
             if (isAdd){
-                this.projectCollectResponsitory.saveData(this.item.item.fullName,this.item.item)
+                this.projectCollectResponsitory.saveData(this.item.item.fullName,this.item)
             }else {
-                this.projectCollectResponsitory.removeData(this.item.item.fullName,this.item.item)
+                this.projectCollectResponsitory.removeData(this.item.item.fullName)
             }
         }
     }

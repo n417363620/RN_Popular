@@ -212,11 +212,12 @@ export default class PopularPage extends Component {
        // this.props.navigation.navigate('Android')
      }
      collectResponsitory(data,isFavorite){
+         data.isFavorite=isFavorite
         if (isFavorite) {
-            this.projectCollectResponsitory.saveData(data.id.toString(),data)
+            this.projectCollectResponsitory.saveData(data.item.id.toString(),data)
         }
          if(!isFavorite) {
-             this.projectCollectResponsitory.removeData(data.id.toString())
+             this.projectCollectResponsitory.removeData(data.item.id.toString())
          }
 
      }

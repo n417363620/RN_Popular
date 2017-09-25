@@ -54,7 +54,7 @@ export default class PopularItem extends Component {
                            <Text style={styles.language}>{data.stargazers_count}</Text>
                        </View>
                       <TouchableOpacity onPress={()=>{
-                          this.props.collect(data,!this.state.checked)
+                          this.props.collect(this.props.data,!this.state.checked)
                          this.setState({checked:!this.state.checked})
                       }}>
                           <Image style={this.state.checked?[styles.collectimg,{tintColor:'#912CEE'}]:styles.collectimg} source={require('../../res/image/ic_collect.png')}/>

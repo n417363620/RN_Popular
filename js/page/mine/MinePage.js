@@ -12,15 +12,13 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
+    ScrollView
 } from 'react-native'
 import NavigationBar from "../../common/NavigationBar";
 import CustomeKeyPage from "./CustomeKeyPage";
 import {FLAG_MODULE} from "../../util/DataRequest";
 import {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 import {NavigationActions} from "react-navigation";
-
-
-
 export default class MinePage extends Component {
     // 构造
     constructor(props) {
@@ -57,24 +55,115 @@ export default class MinePage extends Component {
                         hidden:false
                     }}
                 />
-                <Text onPress={()=>{
-                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_key})
-                }}>自定义标签</Text>
-                <Text onPress={()=>{
-                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_language})
-                }}>自定义语言</Text>
-                <Text onPress={()=>{
-                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_key,removeKeys:true})
-                }}>移除标签</Text>
-                <Text onPress={()=>{
-                    this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_language,removeKeys:true})
-                }}>移除语言</Text>
-                <Text onPress={()=>{
-                    this.props.navigation.navigate('KeySortPage',{flag:FLAG_LANGUAGE.flag_key})
-                }}>标签排序</Text>
-                <Text onPress={()=>{
-                    this.props.navigation.navigate('KeySortPage',{flag:FLAG_LANGUAGE.flag_language})
-                }}>语言排序</Text>
+                <ScrollView>
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('IntroducePage')
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={{tintColor:'#912CEE',height:48,width:48}} source={require('../../../res/image/ic_popular.png')}/>
+                            <Text style={{color:"#4c4c4c",fontSize:16}}>GitHub  Popular</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+
+                    <View style={styles.section}>
+                        <Text style={styles.fontsection}>趋势管理</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_language})
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_tagmanager.png')}/>
+                            <Text style={styles.fontsizetitle}>自定义语言</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                     <View style={styles.line}/>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('KeySortPage',{flag:FLAG_LANGUAGE.flag_language})
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_sort.png')}/>
+                            <Text style={styles.fontsizetitle}>语言排序</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_language,removeKeys:true})
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_tagdelete.png')}/>
+                            <Text style={styles.fontsizetitle}>语言移除</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <View style={styles.section}>
+                        <Text style={styles.fontsection}>最热管理</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_key})
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_tagmanager.png')}/>
+                            <Text style={styles.fontsizetitle}>自定义标签</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('KeySortPage',{flag:FLAG_LANGUAGE.flag_key})
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_sort.png')}/>
+                            <Text style={styles.fontsizetitle}>标签排序</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        this.props.navigation.navigate('CustomeKeyPage',{flag:FLAG_LANGUAGE.flag_key,removeKeys:true})
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_tagdelete.png')}/>
+                            <Text style={styles.fontsizetitle}>标签移除</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <View style={styles.section}>
+                        <Text style={styles.fontsection}>设置</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.item}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_theme.png')}/>
+                            <Text style={styles.fontsizetitle}>自定义主题</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <TouchableOpacity style={styles.item}  onPress={()=>{
+                        this.props.navigation.navigate('AboutAuthorPage')
+                    }} >
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_aboutme.png')}/>
+                            <Text style={styles.fontsizetitle}>关于作者</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+                </ScrollView>
 
             </View>
         );
@@ -83,6 +172,42 @@ export default class MinePage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    item:{
+        flexDirection:'row',
+        paddingVertical:15,
+        paddingHorizontal:10,
+        backgroundColor:'white',
+        alignItems:'center',
+        justifyContent:'space-between'
+    },
+    icon:{
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    imgsize:{
+        tintColor:'#912CEE',
+        height:16,
+        width:16,
+    },
+    section:{
+        flexDirection:'row',
+        paddingVertical:4,
+        paddingHorizontal:10,
+        backgroundColor:'#d9d9d9',
+    },
+    fontsection:{
+        fontSize:13,
+        color:'#A6A6A6'
+    },
+    fontsizetitle:{
+        marginLeft:10,
+        fontSize:15,
+        color:'#4C4C4C'
+    },
+    line:{
+        height:0.5,
+        backgroundColor:'#d9d9d9'
     }
 });
 

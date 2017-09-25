@@ -85,7 +85,22 @@ export default class ViewUtil extends Component {
                 style={[styles.textButton, {textAlign: 'center'}]}>{text}</Text>
         </TouchableOpacity>
     }
+   static getListCell(img,text,callBack){
+        return (
+            <View>
+            <TouchableOpacity style={styles.item} onPress={()=>{
 
+            }}>
+                <View style={styles.icon}>
+                    <Image style={styles.imgsize} source={img}/>
+                    <Text style={styles.fontsizetitle}>{text}</Text>
+                </View>
+                <Image style={styles.imgsize} source={require('../../res/image/ic_jump.png')}/>
+            </TouchableOpacity>
+            <View style={styles.line}/>
+            </View>
+        )
+   }
 }
 const styles = StyleSheet.create({
     container: {
@@ -113,5 +128,41 @@ const styles = StyleSheet.create({
     centerButtonPadding:{
 
     },
+    item:{
+        flexDirection:'row',
+        paddingVertical:15,
+        paddingHorizontal:10,
+        backgroundColor:'white',
+        alignItems:'center',
+        justifyContent:'space-between'
+    },
+    icon:{
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    imgsize:{
+        tintColor:'#912CEE',
+        height:16,
+        width:16,
+    },
+    section:{
+        flexDirection:'row',
+        paddingVertical:4,
+        paddingHorizontal:10,
+        backgroundColor:'#d9d9d9',
+    },
+    fontsection:{
+        fontSize:13,
+        color:'#A6A6A6'
+    },
+    fontsizetitle:{
+        marginLeft:10,
+        fontSize:15,
+        color:'#4C4C4C'
+    },
+    line:{
+        height:0.5,
+        backgroundColor:'#d9d9d9'
+    }
 });
 
