@@ -101,6 +101,9 @@ export default class PopularPage extends Component {
             <View style={{flex:1}}>
                 <NavigationBar
                     title={'最热'}
+                    rightButton={ViewUtil.getRightImageButton(require('../../../res/image/ic_search.png'),()=>{
+                        NavigationBar.Push(this,'Search')
+                    })}
                     statusBar={{
                     backgroundColor:"#912CEE",
                     barStyle:"light-content",

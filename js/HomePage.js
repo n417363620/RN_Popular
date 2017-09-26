@@ -26,6 +26,8 @@ import * as CardStackStyleInterpolator from "react-navigation";
 import TransitionPage from "./common/TransitionPage";
 import IntroducePage from "./page/mine/IntroducePage";
 import AboutAuthor from "./page/mine/AboutAuthor";
+import LinkWeb from "./page/mine/LinkWeb";
+import SearchPage from "./page/popular/SearchPage";
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
 /**
@@ -36,7 +38,9 @@ import AboutAuthor from "./page/mine/AboutAuthor";
 const PopularScreen = ({ navigation }) => (
     <PopularPage  navigation={navigation} />
 );
-
+const SearchScreen = ({ navigation }) => (
+    <SearchPage  navigation={navigation} />
+);
 const PopularTab = StackNavigator({
     Popular: {
         screen: PopularScreen,
@@ -44,6 +48,14 @@ const PopularTab = StackNavigator({
         navigationOptions: {
             title: 'Welcome',
             header:null,
+        },
+    },
+    Search: {
+        screen: SearchScreen,
+        navigationOptions: {
+            title: 'Welcome',
+            header:null,
+            tabBarVisible:false
         },
     },
 });
@@ -123,6 +135,12 @@ const IntroduceScreen = ({ navigation }) => (
 const AboutAuthorScreen = ({ navigation }) => (
     <AboutAuthor  navigation={navigation} />
 );
+/**
+ * 官网主页
+ */
+const LinkWebScreen = ({ navigation }) => (
+    <LinkWeb  navigation={navigation} />
+);
 const MineTab = StackNavigator({
     Mine: {
         screen: MineScreen,
@@ -159,6 +177,14 @@ const MineTab = StackNavigator({
     },
     AboutAuthorPage: {
         screen: AboutAuthorScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header: null,
+            tabBarVisible: false
+        },
+    },
+    LinkWebPage: {
+        screen: LinkWebScreen,
         navigationOptions: {
             title: 'Notifications',
             header: null,

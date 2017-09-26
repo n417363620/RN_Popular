@@ -15,10 +15,12 @@ import {
     Dimensions,
     ListView,
     TouchableOpacity,
-    Platform
+    Platform,
+    Linking
 } from 'react-native'
 import ViewUtil from "../../util/ViewUtil";
 import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
+import NavigationBar from "../../common/NavigationBar";
 
 export default class IntroducePage extends Component {
     constructor(props) {
@@ -30,14 +32,16 @@ export default class IntroducePage extends Component {
     }
 
     render(){
-
        return this.aboutCommon.render({
             name:'NYY',
             description:'广受好评的好应用！！！！！',
         },(<View>
-            {ViewUtil.getListCell(require('../../../res/image/ic_popular.png'),'项目一',()=>{})}
-           {ViewUtil.getListCell(require('../../../res/image/ic_popular.png'),'项目二',()=>{})}
-           {ViewUtil.getListCell(require('../../../res/image/ic_popular.png'),'项目三',()=>{})}
+           {ViewUtil.getListCell(require('../../../res/image/ic_website.png'),'Website',()=>{
+             //  this.props.navigation.navigate('LinkWebPage',{url:'http://www.i-jia.net/'})
+               NavigationBar.Push(this,'LinkWebPage',{url:'http://www.i-jia.net/'})
+           })}
+           {ViewUtil.getListCell(require('../../../res/image/ic_aboutme.png'),'About Author',()=>{})}
+           {ViewUtil.getListCell(require('../../../res/image/ic_feedback.png'),'Feed Back',()=>{})}
        </View>))
     }
 }

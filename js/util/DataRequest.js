@@ -6,7 +6,7 @@
  */
 import {AsyncStorage} from 'react-native'
 import GitHubTrending from 'GitHubTrending'
-export const FLAG_MODULE={flag_popular:'popular',flag_trending:'rending'}
+export const FLAG_MODULE={flag_popular:'popular',flag_trending:'rending',flag_mine:'mine'}
 export default  class DataRequest{
     // 构造
       constructor(flag) {

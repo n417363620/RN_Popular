@@ -48,12 +48,12 @@ export default class ViewUtil extends Component {
      * @param callBack
      * @returns {XML}
      */
-    static getRightImageButton(source, callBack,state) {
+    static getRightImageButton(source, callBack) {
         return <TouchableOpacity style={styles.rightButtonPadding}
-                                 onPress={callBack}
+                                    onPress={callBack}
         >
             <Image source={source}
-                style={state?[styles.imageButton,{tintColor:'#912CEE'}]:styles.imageButton}></Image>
+                style={[styles.imageButton,{tintColor:'white'}]}></Image>
         </TouchableOpacity>
     }
     /**
@@ -88,9 +88,7 @@ export default class ViewUtil extends Component {
    static getListCell(img,text,callBack){
         return (
             <View>
-            <TouchableOpacity style={styles.item} onPress={()=>{
-
-            }}>
+            <TouchableOpacity style={styles.item} onPress={callBack}>
                 <View style={styles.icon}>
                     <Image style={styles.imgsize} source={img}/>
                     <Text style={styles.fontsizetitle}>{text}</Text>

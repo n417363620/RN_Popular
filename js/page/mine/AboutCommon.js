@@ -20,12 +20,36 @@ import {
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ViewUtil from "../../util/ViewUtil";
 import NavigationBar from "../../common/NavigationBar";
+import ProjectCollectResponsitory, {FLAG_PROJECTTYPE} from "../../expand/ProjectCollectResponsitory";
 export const FLAG_ABOUT={flag_introduce:'flag_introduce',flag_aboutme:'flag_aboutme'}
 export default class AboutCommon{
     constructor(props,updateState,flag) {
        this.props=props;
        this.updateState=updateState;
        this.flag=flag;
+        this.repositories;
+        this.favoriteKeys=null;
+        this.favoriteDao=new ProjectCollectResponsitory(FLAG_PROJECTTYPE.flag_popular)
+    }
+    /**
+     * 更新项目的用户收藏状态 省去链式调用
+     * @param repositories
+     */
+    async updateFavorite(repositories){
+        if(repositories)this.repositories=repositories
+        if(!this.repositories)return
+        if(!this.favoriteKeys){
+            //将链式响应变为同步操作
+            this.favoriteKeys =await this.favoriteDao.fetchKeyData()
+        }
+        let projectModel=[];
+    }
+    /**
+     * 通知数据发生改变
+     * @param arr
+     */
+    onNotifyDataChanged(items){
+
     }
     getParallaxRenderConfig(params){
         let  config={}
