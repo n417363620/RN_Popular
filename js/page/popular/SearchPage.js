@@ -26,6 +26,7 @@ import ArrayUtils from "../../util/ArrayUtils";
 import ProjectCollectResponsitory from "../../expand/ProjectCollectResponsitory";
 import PopularItem from "../../common/PopularItem";
 import LanguageResponsitory, {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
+import makeCancelable from '../../util/Cancelable'
 const URL='https://api.github.com/search/repositories?q=';
 const QUERY_STR='&sort=stars'
 const window=Dimensions.get('window')
@@ -91,7 +92,8 @@ export default class SearchPage extends Component {
             rightImageButton:!this.state.rightImageButton
         })
         let url=URL+this.state.value+QUERY_STR
-        this.dataRequrest.get(url)
+        this.cancleable=makeCancelable( this.dataRequrest.get(url))
+        this.cancleable.promise
             .then(result=>{
                 if (result!=null&&result.items!=null&&result.items.length!==0){
                     this.items=result.items
@@ -194,7 +196,8 @@ export default class SearchPage extends Component {
                         this.checkTag(this.state.value)
                         this.search()
                     }):ViewUtil.getRightTextButton('取消',()=>{
-                       this.setState({value:'',rightImageButton:!this.state.rightImageButton,showBottom:false})
+                       this.cancleable.cancel()
+                       this.setState({value:'',rightImageButton:!this.state.rightImageButton,showBottom:false,loading:false})
                     })}
                     statusBar={{
                         backgroundColor:"#912CEE",
