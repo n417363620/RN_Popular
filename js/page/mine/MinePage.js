@@ -19,6 +19,8 @@ import CustomeKeyPage from "./CustomeKeyPage";
 import {FLAG_MODULE} from "../../util/DataRequest";
 import {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 import {NavigationActions} from "react-navigation";
+import {NativeModules} from 'react-native'
+import ImagePicker from "../../module/ImagePicker";
 export default class MinePage extends Component {
     // 构造
     constructor(props) {
@@ -144,7 +146,12 @@ export default class MinePage extends Component {
                         <Text style={styles.fontsection}>设置</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.item}>
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        //NativeModules.ToastExample.show('Hello World!',NativeModules.ToastExample.LONG).then(result=>{console.log(result)})
+                        ImagePicker.selectImageFormSD(ImagePicker.MULTI,20).then(result=>{
+                            console.log(result)
+                        }).catch(error=>{console.log(error)})
+                    }}>
                         <View style={styles.icon}>
                             <Image style={styles.imgsize} source={require('../../../res/image/ic_theme.png')}/>
                             <Text style={styles.fontsizetitle}>自定义主题</Text>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+		android:gravity="center" 
+        >
+		<RelativeLayout
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:layout_width="match_parent"
+			android:layout_height="44dp">
+			<ImageView
+				android:id="@+id/iv_cancel"
+				android:layout_centerVertical="true"
+				android:src="@drawable/ic_cancel"
+				android:layout_width="20dp"
+				android:layout_height="20dp" />
+			<LinearLayout
+				android:layout_centerVertical="true"
+				android:layout_centerHorizontal="true"
+				android:layout_marginLeft="40dp"
+				android:layout_marginRight="40dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				<TextView
+					android:id="@+id/tv_title"
+					android:gravity="center"
+					android:text="处理图片"
+					android:textSize="16sp"
+					android:textColor="#A6A6A6"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+
+			</LinearLayout>
+			<TextView
+				android:id="@+id/tv_confirm"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="完成"
+				android:textSize="16sp"
+				android:padding="8dp"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"/>
+		</RelativeLayout>
+        
+		<view class="com.githubtrending.ImageCrop.view.CropImageView"
+			android:layout_width="match_parent" 
+			android:layout_height="match_parent"
+			android:id="@+id/imgCrop"
+			/>
+    </LinearLayout>
+</RelativeLayout>
