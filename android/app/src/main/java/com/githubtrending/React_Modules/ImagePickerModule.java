@@ -9,17 +9,20 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.githubtrending.ImagePicker.activity.ImageSelect;
 import com.githubtrending.ImagePicker.activity.ImsMultiImageSelectorActivity;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import static android.R.id.list;
 import static com.githubtrending.ImagePicker.activity.ImageSelect.REQUEST_SELECT_IMAGE;
 
 /**
@@ -74,13 +77,14 @@ public class ImagePickerModule extends ReactContextBaseJavaModule{
      * @param maxNum         最大图片添加数量
      */
     @ReactMethod
-    public  void selectImageFormSDWithCamera(int selectedMode, WritableArray source, int maxNum,final Promise promise){
+    public  void selectImageFormSDWithCamera(int selectedMode, String jsonArray, int maxNum,final Promise promise){
         this.mPickerPromise=promise;
         Activity activity = getCurrentActivity();
         boolean showCamera = true;//是否显示拍照图片
         ArrayList<String> mSelectPath=new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            mSelectPath.add(source.getString(i));
+        JsonArray asJsonArray = new JsonParser().parse(jsonArray).getAsJsonArray();
+        for (final JsonElement elem : asJsonArray) {
+            mSelectPath.add(new Gson().fromJson(elem, String.class));
         }
         Intent intent = new Intent(activity, ImsMultiImageSelectorActivity.class);
         // 是否显示拍摄图片
@@ -97,13 +101,14 @@ public class ImagePickerModule extends ReactContextBaseJavaModule{
         activity.startActivityForResult(intent, REQUEST_SELECT_IMAGE);
     }
     @ReactMethod
-    public  void selectImageFormSDNeedsCrop(int selectedMode, ReadableArray source, boolean needCrop, final Promise promise){
+    public  void selectImageFormSDNeedsCrop(int selectedMode, String jsonArray, boolean needCrop, final Promise promise){
         this.mPickerPromise=promise;
         Activity activity = getCurrentActivity();
         boolean showCamera = true;//是否显示拍照图片
         ArrayList<String> mSelectPath=new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            mSelectPath.add(source.getString(i));
+        JsonArray asJsonArray = new JsonParser().parse(jsonArray).getAsJsonArray();
+        for (final JsonElement elem : asJsonArray) {
+            mSelectPath.add(new Gson().fromJson(elem, String.class));
         }
 
         Intent intent = new Intent(activity, ImsMultiImageSelectorActivity.class);
@@ -122,13 +127,14 @@ public class ImagePickerModule extends ReactContextBaseJavaModule{
         activity.startActivityForResult(intent, REQUEST_SELECT_IMAGE);
     }
     @ReactMethod
-    public  void selectImageFormSDShowCameraAndNeedsCrop(boolean showCamera,int selectedMode,ReadableArray source,boolean needCrop,final Promise promise){
+    public  void selectImageFormSDShowCameraAndNeedsCrop(boolean showCamera,int selectedMode,String jsonArray,boolean needCrop,final Promise promise){
         this.mPickerPromise=promise;
         Activity activity = getCurrentActivity();
 //        boolean showCamera = true;//是否显示拍照图片
         ArrayList<String> mSelectPath=new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            mSelectPath.add(source.getString(i));
+        JsonArray asJsonArray = new JsonParser().parse(jsonArray).getAsJsonArray();
+        for (final JsonElement elem : asJsonArray) {
+            mSelectPath.add(new Gson().fromJson(elem, String.class));
         }
         Intent intent = new Intent(activity, ImsMultiImageSelectorActivity.class);
         //能否裁剪

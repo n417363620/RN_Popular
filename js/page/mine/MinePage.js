@@ -148,7 +148,12 @@ export default class MinePage extends Component {
 
                     <TouchableOpacity style={styles.item} onPress={()=>{
                         //NativeModules.ToastExample.show('Hello World!',NativeModules.ToastExample.LONG).then(result=>{console.log(result)})
-                        ImagePicker.selectImageFormSD(ImagePicker.MULTI,20).then(result=>{
+                        let array=["/storage/emulated/0/wandoujia/downloader/openscreen/open_screen_title_img_1245.png",
+                            "/storage/emulated/0/DCIM/Camera/QuickCapture/IMG_20170903_143912_1R.jpg",
+                            "/storage/emulated/0/wandoujia/downloader/openscreen/open_screen_bg_img_1203.png"]
+                        let jsonString=JSON.stringify(array)
+                        console.log(jsonString)
+                        ImagePicker.selectImageFormSDWithCamera(ImagePicker.MULTI,jsonString,20).then(result=>{
                             console.log(result)
                         }).catch(error=>{console.log(error)})
                     }}>
