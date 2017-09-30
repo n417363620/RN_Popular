@@ -28,6 +28,7 @@ import IntroducePage from "./page/mine/IntroducePage";
 import AboutAuthor from "./page/mine/AboutAuthor";
 import LinkWeb from "./page/mine/LinkWeb";
 import SearchPage from "./page/popular/SearchPage";
+import QRScannerPage from "./page/other/QRScannerPage";
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
 /**
@@ -210,7 +211,9 @@ const WebViewScreen = ({ navigation }) => (
 const TransitionScreen = ({ navigation }) => (
     <TransitionPage  navigation={navigation} />
 );
-
+const QRScannerScreen=({navigation}) =>(
+    <QRScannerPage navigation={navigation}></QRScannerPage>
+)
 
 
 //todo 底部按钮注册位置
@@ -317,6 +320,12 @@ const StacksOverTabs = StackNavigator({
             header:null
         }
     },
+    QRScannerPage:{
+        screen:QRScannerScreen,
+        navigationOptions:{
+            header:null
+        }
+    }
 },{
     initialRouteName: 'Root',
     initialRouteParams: {initPara: '初始页面参数'},

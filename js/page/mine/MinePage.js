@@ -49,14 +49,6 @@ export default class MinePage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <NavigationBar
-                    title={'我的'}
-                    statusBar={{
-                        backgroundColor:"#912CEE",
-                        barStyle:"light-content",
-                        hidden:false
-                    }}
-                />
                 <ScrollView>
                     <TouchableOpacity style={styles.item} onPress={()=>{
                         this.props.navigation.navigate('IntroducePage')
@@ -171,6 +163,33 @@ export default class MinePage extends Component {
                         <View style={styles.icon}>
                             <Image style={styles.imgsize} source={require('../../../res/image/ic_aboutme.png')}/>
                             <Text style={styles.fontsizetitle}>关于作者</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+
+                    <View style={styles.section}>
+                        <Text style={styles.fontsection}>其他</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        NavigationBar.Push(this,'QRScannerPage')
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_qr.png')}/>
+                            <Text style={styles.fontsizetitle}>二维码扫描</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                    <View style={styles.line}/>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_qr.png')}/>
+                            <Text style={styles.fontsizetitle}>待定</Text>
                         </View>
                         <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
                     </TouchableOpacity>
