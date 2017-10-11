@@ -20,7 +20,7 @@ import {FLAG_MODULE} from "../../util/DataRequest";
 import {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 import {NavigationActions} from "react-navigation";
 import {NativeModules} from 'react-native'
-import ImagePicker from "../../module/ImagePicker";
+import ImagePicker, {IMAGESELECTOR_MODE} from "../../module/ImagePicker";
 export default class MinePage extends Component {
     // 构造
     constructor(props) {
@@ -145,9 +145,15 @@ export default class MinePage extends Component {
                             "/storage/emulated/0/wandoujia/downloader/openscreen/open_screen_bg_img_1203.png"]
                         let jsonString=JSON.stringify(array)
                         console.log(jsonString)
-                        ImagePicker.selectImageFormSDWithCamera(ImagePicker.MULTI,jsonString,20).then(result=>{
+                       /* ImagePicker.RNselectImagesWithExistImages(jsonString,20,false).then(result=>{
+                            console.log(result)
+                        }).catch(error=>{console.log(error)})*/
+                        ImagePicker.RNcropImage(true).then(result=>{
                             console.log(result)
                         }).catch(error=>{console.log(error)})
+                       /* ImagePicker.RNselectImages(20,false).then(result=>{
+                            console.log(result)
+                        }).catch(error=>{console.log(error)})*/
                     }}>
                         <View style={styles.icon}>
                             <Image style={styles.imgsize} source={require('../../../res/image/ic_theme.png')}/>
@@ -178,7 +184,7 @@ export default class MinePage extends Component {
                     }}>
                         <View style={styles.icon}>
                             <Image style={styles.imgsize} source={require('../../../res/image/ic_qr.png')}/>
-                            <Text style={styles.fontsizetitle}>二维码扫描</Text>
+                            <Text style={styles.fontsizetitle}>挑选照片</Text>
                         </View>
                         <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
                     </TouchableOpacity>
@@ -188,12 +194,14 @@ export default class MinePage extends Component {
 
                     }}>
                         <View style={styles.icon}>
-                            <Image style={styles.imgsize} source={require('../../../res/image/ic_qr.png')}/>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_contact.png')}/>
                             <Text style={styles.fontsizetitle}>待定</Text>
                         </View>
                         <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
                     </TouchableOpacity>
                     <View style={styles.line}/>
+                    <Image style={{width:220,height:220}} source={{uri:'file:///storage/emulated/0/download/com.githubtrending/images/dts1507627432029.jpg'}}/>
+                    <Image style={styles.imgsize} source={require('../../../res/image/ic_theme.png')}/>
                 </ScrollView>
 
             </View>

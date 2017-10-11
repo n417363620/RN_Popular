@@ -112,7 +112,7 @@ public class ImsMultiImageSelectorFragment extends Fragment {
 
     private boolean hasFolderGened = false;
     private boolean mIsShowCamera = false;
-
+    private int mode=1;
     private int mGridWidth, mGridHeight;
 
     private File mTmpFile;
@@ -140,7 +140,7 @@ public class ImsMultiImageSelectorFragment extends Fragment {
         mDesireImageCount = getArguments().getInt(EXTRA_SELECT_COUNT);
 
         // 图片选择模式
-        final int mode = getArguments().getInt(EXTRA_SELECT_MODE);
+       mode = getArguments().getInt(EXTRA_SELECT_MODE);
 
         // 默认选择
         if (mode == MODE_MULTI) {
@@ -357,7 +357,8 @@ public class ImsMultiImageSelectorFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 if (mTmpFile != null) {
                     if (mCallback != null) {
-                        mCallback.onCameraShot(mTmpFile);
+                        if (mode==MODE_SINGLE)  mCallback.onSingleImageSelected(mTmpFile.getAbsolutePath());
+                        else mCallback.onCameraShot(mTmpFile);
                     }
                 }
             } else {
