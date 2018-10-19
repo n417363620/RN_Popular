@@ -3,6 +3,7 @@ package com.githubtrending;
 import android.app.Application;
 import android.content.Context;
 
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),
             new RCTCameraPackage(),
           new AnExampleReactPackage()
       );

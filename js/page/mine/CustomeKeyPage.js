@@ -173,10 +173,10 @@ const styles = StyleSheet.create({
     },
     itemText:{
         backgroundColor:'white',
+        borderColor:'#ddd',
         padding:10,
         flex:1,
         borderBottomWidth:0.5,
-        borderColor:'#ddd'
     },
     itemImag:{
         height:18,

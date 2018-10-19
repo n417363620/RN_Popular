@@ -29,6 +29,7 @@ import AboutAuthor from "./page/mine/AboutAuthor";
 import LinkWeb from "./page/mine/LinkWeb";
 import SearchPage from "./page/popular/SearchPage";
 import QRScannerPage from "./page/other/QRScannerPage";
+
 //界面注册位置
 /// todo: ////////流行模块下的界面///////////////////////////////////////////////////
 /**
@@ -137,10 +138,20 @@ const AboutAuthorScreen = ({ navigation }) => (
     <AboutAuthor  navigation={navigation} />
 );
 /**
+ *element
+ */
+const ElementsScreen = ({ navigation }) => (
+    <Elements  navigation={navigation} />
+);
+/**
  * 官网主页
  */
 const LinkWebScreen = ({ navigation }) => (
     <LinkWeb  navigation={navigation} />
+);
+//redux测试
+const ReduxPageScreen = ({ navigation }) => (
+    <ReduxTextPage navigation={navigation} />
 );
 const MineTab = StackNavigator({
     Mine: {
@@ -186,6 +197,22 @@ const MineTab = StackNavigator({
     },
     LinkWebPage: {
         screen: LinkWebScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header: null,
+            tabBarVisible: false
+        },
+    },
+    ElementsPage: {
+        screen: ElementsScreen,
+        navigationOptions: {
+            title: 'Notifications',
+            header: null,
+            tabBarVisible: false
+        },
+    },
+    ReduxTextPage: {
+        screen: ReduxPageScreen,
         navigationOptions: {
             title: 'Notifications',
             header: null,

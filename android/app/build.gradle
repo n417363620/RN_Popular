@@ -151,6 +151,7 @@ dependencies {
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.google.code.gson:gson:2.8.2'
     compile project(path: ':react-native-camera')
+    compile project(path: ':react-native-fetch-blob')
 }
 
 // Run this once to be able to run the application with BUCK

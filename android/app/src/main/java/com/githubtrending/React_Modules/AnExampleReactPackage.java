@@ -19,6 +19,7 @@ public class AnExampleReactPackage implements ReactPackage{
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new ToastModule(reactContext));
         modules.add(new ImagePickerModule(reactContext));
+        modules.add(new HardwareExecuteModule(reactContext));
         return modules;
     }
 

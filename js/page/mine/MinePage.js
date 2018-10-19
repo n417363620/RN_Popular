@@ -20,6 +20,7 @@ import {FLAG_MODULE} from "../../util/DataRequest";
 import {FLAG_LANGUAGE} from "../../expand/LanguageResponsitory";
 import {NavigationActions} from "react-navigation";
 import {NativeModules} from 'react-native'
+import  RNFetchBlob from 'react-native-fetch-blob'
 import ImagePicker, {IMAGESELECTOR_MODE} from "../../module/ImagePicker";
 export default class MinePage extends Component {
     // 构造
@@ -28,7 +29,7 @@ export default class MinePage extends Component {
         // 初始状态
         console.log(this.props.navigation.state.params)
         this.state = {
-
+             base64:null
         };
     }
     componentDidMount() {
@@ -45,6 +46,9 @@ export default class MinePage extends Component {
     }
     componentWillUnmount() {
         clearTimeout(this.timer)
+    }
+    renderImage(){
+        return  <Image style={{height:100,width:100}} source={{ uri : 'data:image/png,base64,' + this.state.base64 }}/>
     }
     render() {
         return (
@@ -190,18 +194,60 @@ export default class MinePage extends Component {
                     </TouchableOpacity>
                     <View style={styles.line}/>
 
+                 
+                
                     <TouchableOpacity style={styles.item} onPress={()=>{
+                        RNFetchBlob.fetch('GET', 'http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key=关键字&bk_length=600用例(请右击在新窗口打开)', {
+                            //  Authorization : 'Bearer access-token...',
+                            // more headers  ..
+                        })
+                        // when response status code is 200
+                            .then((res) => {
+                                // the conversion is done in native code
+                               // let base64Str = res.base64()
+                               // console.log(base64Str)
 
+                                // the following conversions are done in js, it's SYNC
+                                // let text = res.text()
+                                let json = res.json()
+                                console.log(json)
+                            })
+                            // Status code is not 200
+                            .catch((errorMessage, statusCode) => {
+                                // error handling
+                            })
                     }}>
                         <View style={styles.icon}>
                             <Image style={styles.imgsize} source={require('../../../res/image/ic_contact.png')}/>
-                            <Text style={styles.fontsizetitle}>待定</Text>
+                            <Text style={styles.fontsizetitle}>React-Native-Blob-simple</Text>
                         </View>
                         <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
                     </TouchableOpacity>
                     <View style={styles.line}/>
-                    <Image style={{width:220,height:220}} source={{uri:'file:///storage/emulated/0/download/com.githubtrending/images/dts1507627432029.jpg'}}/>
-                    <Image style={styles.imgsize} source={require('../../../res/image/ic_theme.png')}/>
+
+                    <TouchableOpacity style={styles.item} onPress={()=>{
+                        RNFetchBlob
+                            .config({
+                                // add this option that makes response data to be stored as a file,
+                                // this is much more performant.
+                                fileCache : true,
+                            })
+                            .fetch('GET', 'a1.33lc.com:801/small/douyutv_33lc.apk', {
+                                //some headers ..
+                            })
+                            .then((res) => {
+                                // the temp file path
+                                console.log('The file saved to ', res.path())
+                            })
+                    }}>
+                        <View style={styles.icon}>
+                            <Image style={styles.imgsize} source={require('../../../res/image/ic_contact.png')}/>
+                            <Text style={styles.fontsizetitle}>React-Native-Blob-bigfile</Text>
+                        </View>
+                        <Image style={styles.imgsize} source={require('../../../res/image/ic_jump.png')}/>
+                    </TouchableOpacity>
+                 
+                    <View style={styles.line}/>
                 </ScrollView>
 
             </View>
